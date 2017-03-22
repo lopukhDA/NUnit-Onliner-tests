@@ -26,7 +26,7 @@ namespace Onliner_tests.PageObject
 
         public By MinPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]");
         public By MaxPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]");
-        public By FilterPrice { get; set; } = By.CssSelector(".schema-tags__item");
+        public By FilterPrice { get; set; } = By.CssSelector(".schema-tags__item span");
         public By Filter { get; set; } = By.ClassName("schema-filter-button__state_disabled");
         public By PriceProducts { get; set; } = By.CssSelector(".schema-product__price-value.schema-product__price-value_primary span");
         public By ProductCatalog { get; set; } = By.Id("schema-products");

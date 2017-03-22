@@ -22,7 +22,7 @@ namespace Onliner_tests
             _webDriver = new WebDriver();
             //var loginPage = new PageObject.LoginPage(_webDriver);
             //loginPage.Open();
-            //loginPage.Login("lopukh.d.a@mail.ru", "Dima4862");
+            //loginPage.Login("lopukh.d.a@yandex.ru", "testpassword");
         }
 
         [TearDown]
@@ -37,26 +37,27 @@ namespace Onliner_tests
          {
              var loginPage = new PageObject.LoginPage(_webDriver);
              loginPage.Open();
-             loginPage.Login("lopukh.d.a@mail.ru", "Dima4862");
+             loginPage.Login("lopukh.d.a@yandex.ru", "testpassword");
              var username = _webDriver.WaitElement(loginPage.Username);
-             Assert.AreEqual("Dzmitry_Lopukh", _webDriver.GetText(username), "Username страницы отличается от ожидаемого");
+             Assert.AreEqual("Dzmitry_Lopukh_test", _webDriver.GetText(username), "Username страницы отличается от ожидаемого");
          }
-
+        
          [Test]
          public void SuccessfulPriceFilter()
          {
              var catalogPage = new PageObject.CatalogPage(_webDriver);
              catalogPage.Open();
              catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(300, 500);
-             Assert.AreEqual("300 — 500", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученными");
+             Assert.AreEqual("300 — 500", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученным");
          }
          
-        [Test]
-        public void SuccessfulFilterForMinPrice()
+        [TestCase(300)]
+        [TestCase(800)]
+        public void SuccessfulFilterForMinPrice(double m)
         {
             var catalogPage = new PageObject.CatalogPage(_webDriver);
             catalogPage.Open();
-            double minPrice = 300;
+            double minPrice = m;
             catalogPage.InputFilterOnlyMinPriceAndWaitComplitePrice(minPrice);
             string[] price = catalogPage.GetAllPriceInThisPage();
             bool error = false;
