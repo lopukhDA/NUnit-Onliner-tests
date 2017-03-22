@@ -15,7 +15,7 @@ namespace Onliner_tests
         private IWebDriver _driver;
         private IWait<IWebDriver> _wait;
 
-        public WebDriver()   //public WebDriver(string driverType)
+        public WebDriver()  
         {
             _driver = new ChromeDriver();
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
@@ -28,7 +28,6 @@ namespace Onliner_tests
 
         public void Navigate(string v)
         {
-            //Console.WriteLine($"Go to ulr: {v}");
             _driver.Navigate().GoToUrl(v);
         }
 

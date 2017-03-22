@@ -31,7 +31,7 @@ namespace Onliner_tests
             _webDriver.Quit();
         }
 
-        /*
+        
          [Test]
          public void SuccessLogin()
          {
@@ -50,7 +50,7 @@ namespace Onliner_tests
              catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(300, 500);
              Assert.AreEqual("300 — 500", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученными");
          }
-         */
+         
         [Test]
         public void SuccessfulFilterForMinPrice()
         {
