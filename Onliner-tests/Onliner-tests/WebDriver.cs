@@ -1,9 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +23,37 @@ namespace Onliner_tests
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
         }
 
+        public WebDriver(string driverType)
+        {
+            switch (driverType)
+            {
+                case "FirefoxDriver":
+                    _driver = new FirefoxDriver();
+                    break;
+                case "InternetExplorerDriver":
+                    _driver = new InternetExplorerDriver();
+                    break;
+                case "ChromeDriver":
+                    _driver = new ChromeDriver();
+                    break;
+                default:
+                    _driver = new ChromeDriver();
+                    break;
+            }
+            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+        }
+
         public void Quit()
         {
+            Console.WriteLine("Test Quit");
             _driver.Quit();
         }
 
-        public void Navigate(string v)
+        public void Navigate(string url)
         {
-            _driver.Navigate().GoToUrl(v);
+            Console.WriteLine($"Navigating is {url}");
+            _driver.Navigate().GoToUrl(url);
+            _driver.Manage().Window.Maximize();
         }
 
         public void Click(IWebElement element)
@@ -39,6 +64,7 @@ namespace Onliner_tests
 
         public void SendKeys(By locator, string text)
         {
+            Console.WriteLine($"Text '{text}' entered in the locator {locator}");
             var element = FindElementWithWaiting(locator);
             element.SendKeys(text);
         }

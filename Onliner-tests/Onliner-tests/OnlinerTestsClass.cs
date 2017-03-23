@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,10 @@ namespace Onliner_tests
     {
         WebDriver _webDriver;
 
-
         [SetUp]
         public void Setup()
         {
-            _webDriver = new WebDriver();
+            _webDriver = new WebDriver(ConfigurationManager.AppSettings.Get("DriverType"));
             //var loginPage = new PageObject.LoginPage(_webDriver);
             //loginPage.Open();
             //loginPage.Login("lopukh.d.a@yandex.ru", "testpassword");
@@ -30,27 +30,26 @@ namespace Onliner_tests
         {
             _webDriver.Quit();
         }
-
+       
         [TestCaseSource(typeof(DataForTests), "DataTestAccount")]
         public void SuccessLogin(string login, string pass)
-         {
-             var loginPage = new PageObject.LoginPage(_webDriver);
-             loginPage.Open();
-             loginPage.Login(login, pass);
-             var username = _webDriver.WaitElement(loginPage.Username);
-             Assert.AreEqual("Dzmitry_Lopukh_test", _webDriver.GetText(username), "Username страницы отличается от ожидаемого");
-         }
+        {
+            var loginPage = new PageObject.LoginPage(_webDriver);
+            loginPage.Open();
+            loginPage.Login(login, pass);
+            var username = _webDriver.WaitElement(loginPage.Username);
+            Assert.AreEqual("Dzmitry_Lopukh_test", _webDriver.GetText(username), "Username страницы отличается от ожидаемого");
+        }
         
         [TestCase(300, 500)]
         public void SuccessfulPriceFilter(double min, double max)
-         {
-             var catalogPage = new PageObject.CatalogPage(_webDriver);
-             catalogPage.Open();
-             catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(min, max);
-             Assert.AreEqual($"{min} — {max}", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученным");
-         }
+        {
+            var catalogPage = new PageObject.CatalogPage(_webDriver);
+            catalogPage.Open();
+            catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(min, max);
+            Assert.AreEqual($"{min} — {max}", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученным");
+        }
         
-
         [Test]
         public void SuccessfulFilterForMinPrice([Random(300, 800, 3)] double m)
         {
@@ -119,7 +118,7 @@ namespace Onliner_tests
             new object[] { 800 }
         };
         static object[] DataTestAccount = {
-            new object[] { "lopukh.d.a@yandex.ru", "testpassword" }
+            new object[] { ConfigurationManager.AppSettings.Get("Username"), ConfigurationManager.AppSettings.Get("Password") }
         };
     }
 }
