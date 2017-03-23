@@ -5,10 +5,6 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Onliner_tests
 {
@@ -25,15 +21,16 @@ namespace Onliner_tests
 
         public WebDriver(string driverType)
         {
+
             switch (driverType)
             {
-                case "FirefoxDriver":
+                case "Firefox":
                     _driver = new FirefoxDriver();
                     break;
-                case "InternetExplorerDriver":
+                case "IE":
                     _driver = new InternetExplorerDriver();
                     break;
-                case "ChromeDriver":
+                case "Chrome":
                     _driver = new ChromeDriver();
                     break;
                 default:
@@ -41,6 +38,7 @@ namespace Onliner_tests
                     break;
             }
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+
         }
 
         public void Quit()
