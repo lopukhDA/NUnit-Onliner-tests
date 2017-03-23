@@ -31,29 +31,28 @@ namespace Onliner_tests
             _webDriver.Quit();
         }
 
-        
-         [Test]
-         public void SuccessLogin()
+        [TestCaseSource(typeof(DataForTests), "DataTestAccount")]
+        public void SuccessLogin(string login, string pass)
          {
              var loginPage = new PageObject.LoginPage(_webDriver);
              loginPage.Open();
-             loginPage.Login("lopukh.d.a@yandex.ru", "testpassword");
+             loginPage.Login(login, pass);
              var username = _webDriver.WaitElement(loginPage.Username);
              Assert.AreEqual("Dzmitry_Lopukh_test", _webDriver.GetText(username), "Username страницы отличается от ожидаемого");
          }
         
-         [Test]
-         public void SuccessfulPriceFilter()
+        [TestCase(300, 500)]
+        public void SuccessfulPriceFilter(double min, double max)
          {
              var catalogPage = new PageObject.CatalogPage(_webDriver);
              catalogPage.Open();
-             catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(300, 500);
-             Assert.AreEqual("300 — 500", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученным");
+             catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(min, max);
+             Assert.AreEqual($"{min} — {max}", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученным");
          }
-         
-        [TestCase(300)]
-        [TestCase(800)]
-        public void SuccessfulFilterForMinPrice(double m)
+        
+
+        [Test]
+        public void SuccessfulFilterForMinPrice([Random(300, 800, 3)] double m)
         {
             var catalogPage = new PageObject.CatalogPage(_webDriver);
             catalogPage.Open();
@@ -70,13 +69,13 @@ namespace Onliner_tests
             }
             Assert.IsFalse(error, "Ошибка, найдены цены меньше минимальной ");
         }
-        
-        [Test]
-        public void SuccessfulFilterForMaxPrice()
+
+        [TestCaseSource(typeof(DataForTests), "DataTestMaxPrice")]
+        public void SuccessfulFilterForMaxPrice(double max)
         {
             var catalogPage = new PageObject.CatalogPage(_webDriver);
             catalogPage.Open();
-            double maxPrice = 800;
+            double maxPrice = max;
             catalogPage.InputFilterOnlyMaxPriceAndWaitComplitePrice(maxPrice);
             string[] price = catalogPage.GetAllPriceInThisPage();
             bool error = false;
@@ -89,14 +88,14 @@ namespace Onliner_tests
             }
             Assert.IsFalse(error, "Ошибка, найдены цены превышающие максимальную ");
         }
-       
-        [Test]
-        public void SuccessfulFilterForMaxAndMinPrice()
+
+        [TestCase(300, 500)]
+        public void SuccessfulFilterForMaxAndMinPrice(double min, double max)
         {
             var catalogPage = new PageObject.CatalogPage(_webDriver);
             catalogPage.Open();
-            double minPrice = 300;
-            double maxPrice = 800;
+            double minPrice = min;
+            double maxPrice = max;
             catalogPage.InputFilterFullPriceAndWaitComplitePrice(minPrice, maxPrice);
             string[] price = catalogPage.GetAllPriceInThisPage();
             bool error = false;
@@ -110,5 +109,17 @@ namespace Onliner_tests
             Assert.IsFalse(error, "Ошибка, найдены цены не попадают в заданный промежуток ");
         }
         
+    }
+
+    class DataForTests
+    {
+        static object[] DataTestMaxPrice = {
+            new object[] { 500 },
+            new object[] { 1000 },
+            new object[] { 800 }
+        };
+        static object[] DataTestAccount = {
+            new object[] { "lopukh.d.a@yandex.ru", "testpassword" }
+        };
     }
 }

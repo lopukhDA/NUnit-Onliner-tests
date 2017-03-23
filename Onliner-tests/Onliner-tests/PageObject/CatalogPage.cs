@@ -58,8 +58,6 @@ namespace Onliner_tests.PageObject
             {
                 String[] price = element.GetAttribute("innerHTML").Split(",".ToCharArray());
                 allPriceText[i++] = price[0];
-
-
             }
             return allPriceText;
         }
