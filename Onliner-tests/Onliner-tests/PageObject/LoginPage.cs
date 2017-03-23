@@ -7,17 +7,20 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
+using RelevantCodes.ExtentReports;
 
 namespace Onliner_tests.PageObject
 {
     public class LoginPage
     {
        
-        public LoginPage(WebDriver driver)
+        public LoginPage(WebDriver driver, ExtentTest test)
         {
             _driver = driver;
+            _test = test;
         }
         private WebDriver _driver;
+        private ExtentTest _test;
 
         public void Open()
         {
@@ -33,8 +36,11 @@ namespace Onliner_tests.PageObject
         public void Login(string username, string password)
         {
             _driver.Click(ButtonShowFormLogin);
+            _test.Log(LogStatus.Info, $"Click to locator {ButtonShowFormLogin}");
             _driver.SendKeys(LoginInput, username);
+            _test.Log(LogStatus.Info, $"Input username '{username}'");
             _driver.SendKeys(PasswordInput, password);
+            _test.Log(LogStatus.Info, $"Input username '{password}'");
             _driver.Click(SubmitLoginButton);
         }
     }

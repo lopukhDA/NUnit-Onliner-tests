@@ -8,16 +8,19 @@ using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using System.Threading;
+using RelevantCodes.ExtentReports;
 
 namespace Onliner_tests.PageObject
 {
     class CatalogPage
     {
-        public CatalogPage(WebDriver driver)
+        public CatalogPage(WebDriver driver, ExtentTest test)
         {
             _driver = driver;
+            _test = test;
         }
         private WebDriver _driver;
+        private ExtentTest _test;
 
         public void Open()
         {
@@ -36,7 +39,9 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
+            _test.Log(LogStatus.Info, $"Input minfilter price {minPrise.ToString()}");
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
+            _test.Log(LogStatus.Info, $"Input maxfilter price {maxPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
         }
 
@@ -44,6 +49,7 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
+            _test.Log(LogStatus.Info, $"Input minfilter price {minPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
             
@@ -66,6 +72,7 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
+            _test.Log(LogStatus.Info, $"Input maxfilter price {maxPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
         }
@@ -74,7 +81,9 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
+            _test.Log(LogStatus.Info, $"Input minfilter price {minPrise.ToString()}");
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
+            _test.Log(LogStatus.Info, $"Input maxfilter price {maxPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
         }

@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelevantCodes.ExtentReports;
+using NUnit.Framework.Interfaces;
 
 namespace Onliner_tests
 {
@@ -15,6 +17,29 @@ namespace Onliner_tests
     public class OnlinerTestsClass
     {
         WebDriver _webDriver;
+
+        public ExtentReports extent;
+        public ExtentTest test;
+
+        [OneTimeSetUp]
+        public void StartReport()
+        {
+            string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+            string actualPath = path.Substring(0, path.LastIndexOf("bin"));
+            string projectPath = new Uri(actualPath).LocalPath;
+            string reportPath = projectPath + "Reports\\MyOwnReport.html";
+
+            extent = new ExtentReports(reportPath, true);
+            extent.AddSystemInfo("Host Name", "Dzmitry").AddSystemInfo("User Name", "Dzmitry Lopukh");
+            extent.LoadConfig(projectPath + "extent-config.xml");
+        }
+
+        [OneTimeTearDown]
+        public void EndReport()
+        {
+            extent.Flush();
+            extent.Close();
+        }
 
         [SetUp]
         public void Setup()
@@ -28,32 +53,47 @@ namespace Onliner_tests
         [TearDown]
         public void TearDown()
         {
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            var stackTrace = "<pre>" + TestContext.CurrentContext.Result.StackTrace + "</pre>";
+            var errorMessage = TestContext.CurrentContext.Result.Message;
+
+            if (status == TestStatus.Failed)
+            {
+                test.Log(LogStatus.Fail, stackTrace + errorMessage);
+            }
+            extent.EndTest(test);
+            test.Log(LogStatus.Info, "EndTest() method will stop capturing information about the test log");
             _webDriver.Quit();
         }
        
         [TestCaseSource(typeof(DataForTests), "DataTestAccount")]
         public void SuccessLogin(string login, string pass)
         {
-            var loginPage = new PageObject.LoginPage(_webDriver);
+            test = extent.StartTest("SuccessLogin");
+            var loginPage = new PageObject.LoginPage(_webDriver, test);
             loginPage.Open();
             loginPage.Login(login, pass);
             var username = _webDriver.WaitElement(loginPage.Username);
             Assert.AreEqual("Dzmitry_Lopukh_test", _webDriver.GetText(username), "Username страницы отличается от ожидаемого");
+            test.Log(LogStatus.Pass, "Successful login user");
         }
         
         [TestCase(300, 500)]
         public void SuccessfulPriceFilter(double min, double max)
         {
-            var catalogPage = new PageObject.CatalogPage(_webDriver);
+            test = extent.StartTest("SuccessfulPriceFilter");
+            var catalogPage = new PageObject.CatalogPage(_webDriver, test);
             catalogPage.Open();
             catalogPage.InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(min, max);
             Assert.AreEqual($"{min} — {max}", _webDriver.GetText(catalogPage.FilterPrice), "Ошибка, введенные фильтры не совпадают с полученным");
+            test.Log(LogStatus.Pass, "The filter is correctly displayed on the page");
         }
         
         [Test]
         public void SuccessfulFilterForMinPrice([Random(300, 800, 3)] double m)
         {
-            var catalogPage = new PageObject.CatalogPage(_webDriver);
+            test = extent.StartTest("SuccessfulFilterForMinPrice");
+            var catalogPage = new PageObject.CatalogPage(_webDriver, test);
             catalogPage.Open();
             double minPrice = m;
             catalogPage.InputFilterOnlyMinPriceAndWaitComplitePrice(minPrice);
@@ -67,12 +107,14 @@ namespace Onliner_tests
                 }
             }
             Assert.IsFalse(error, "Ошибка, найдены цены меньше минимальной ");
+            test.Log(LogStatus.Pass, "The maximum filter works correctly");
         }
 
         [TestCaseSource(typeof(DataForTests), "DataTestMaxPrice")]
         public void SuccessfulFilterForMaxPrice(double max)
         {
-            var catalogPage = new PageObject.CatalogPage(_webDriver);
+            test = extent.StartTest("SuccessfulFilterForMaxPrice");
+            var catalogPage = new PageObject.CatalogPage(_webDriver, test);
             catalogPage.Open();
             double maxPrice = max;
             catalogPage.InputFilterOnlyMaxPriceAndWaitComplitePrice(maxPrice);
@@ -86,12 +128,14 @@ namespace Onliner_tests
                 }
             }
             Assert.IsFalse(error, "Ошибка, найдены цены превышающие максимальную ");
+            test.Log(LogStatus.Pass, "The minimum filter works correctly");
         }
 
         [TestCase(300, 500)]
         public void SuccessfulFilterForMaxAndMinPrice(double min, double max)
         {
-            var catalogPage = new PageObject.CatalogPage(_webDriver);
+            test = extent.StartTest("SuccessfulFilterForMaxAndMinPrice");
+            var catalogPage = new PageObject.CatalogPage(_webDriver, test);
             catalogPage.Open();
             double minPrice = min;
             double maxPrice = max;
@@ -106,6 +150,7 @@ namespace Onliner_tests
                 }
             }
             Assert.IsFalse(error, "Ошибка, найдены цены не попадают в заданный промежуток ");
+            test.Log(LogStatus.Pass, "The interval filter works correctly");
         }
         
     }
