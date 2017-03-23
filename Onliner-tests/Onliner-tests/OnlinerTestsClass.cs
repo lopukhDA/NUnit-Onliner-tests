@@ -104,6 +104,7 @@ namespace Onliner_tests
                 if (Convert.ToDouble(price[i]) < minPrice)
                 {
                     error = true;
+
                 }
             }
             Assert.IsFalse(error, "Ошибка, найдены цены меньше минимальной ");
