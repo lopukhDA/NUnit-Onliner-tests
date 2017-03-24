@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using RelevantCodes.ExtentReports;
-using System;
 using System.Configuration;
 
 namespace Onliner_tests
@@ -9,7 +7,6 @@ namespace Onliner_tests
     public class BaseTastClass
     {
         protected WebDriver _webDriver;
-
         protected static ExtentReports extent;
         protected static ExtentTest test;
 

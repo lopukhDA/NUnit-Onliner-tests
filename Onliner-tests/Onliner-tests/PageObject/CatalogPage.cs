@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
-using RelevantCodes.ExtentReports;
 
 namespace Onliner_tests.PageObject
 {
@@ -16,7 +15,6 @@ namespace Onliner_tests.PageObject
             _log = log;
         }
         
-
         public void Open()
         {
             _driver.Navigate("https://catalog.onliner.by/notebook");

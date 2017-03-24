@@ -24,7 +24,10 @@ namespace Onliner_tests
             string reportPath = projectPath + "Reports\\MyOwnReport.html";
 
             _extent = new ExtentReports(reportPath, true);
-            _extent.AddSystemInfo("Host Name", "Dzmitry").AddSystemInfo("User Name", ConfigurationManager.AppSettings.Get("Autor"));
+            _extent
+                .AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"))
+                .AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"))
+                .AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"));
             _extent.LoadConfig(projectPath + "extent-config.xml");
         }
 

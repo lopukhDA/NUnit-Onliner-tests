@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using RelevantCodes.ExtentReports;
 
 namespace Onliner_tests.PageObject
 {
@@ -13,7 +12,6 @@ namespace Onliner_tests.PageObject
             _driver = driver;
             _log = log;
         }
-        
 
         public void Open()
         {

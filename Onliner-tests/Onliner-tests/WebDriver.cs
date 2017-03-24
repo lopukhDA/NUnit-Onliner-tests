@@ -4,7 +4,6 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
-using RelevantCodes.ExtentReports;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +15,6 @@ namespace Onliner_tests
         private IWebDriver _driver;
         private IWait<IWebDriver> _wait;
         private LoggerClass _log;
-        
 
         public WebDriver(LoggerClass log)
         {
@@ -53,7 +51,6 @@ namespace Onliner_tests
                 capabilities.SetCapability("marionette", true);
                 _driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), capabilities);
             }
-            
             else
             {
                 switch (driverType)
@@ -72,10 +69,9 @@ namespace Onliner_tests
                         break;
                 }
             }
-            
+
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
             _log = log;
-
         }
 
         public void Quit()
