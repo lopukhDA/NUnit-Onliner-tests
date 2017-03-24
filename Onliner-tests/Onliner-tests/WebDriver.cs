@@ -4,6 +4,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Edge;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -76,6 +77,7 @@ namespace Onliner_tests
         public void Quit()
         {
             Console.WriteLine("Test Quit");
+            _driver.Manage().Cookies.DeleteAllCookies();
             _driver.Quit();
         }
 
