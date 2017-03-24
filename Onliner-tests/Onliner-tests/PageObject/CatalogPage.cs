@@ -18,6 +18,7 @@ namespace Onliner_tests.PageObject
         public void Open()
         {
             _driver.Navigate("https://catalog.onliner.by/notebook");
+            _test.Log(LogStatus.Info, $"Go to page https://catalog.onliner.by/notebook");
         }
 
         public By MinPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]");

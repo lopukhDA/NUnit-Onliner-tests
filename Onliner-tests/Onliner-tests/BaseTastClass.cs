@@ -56,7 +56,6 @@ namespace Onliner_tests
             extent.EndTest(test);
             test.Log(LogStatus.Info, "EndTest() method will stop capturing information about the test log");
             _webDriver.Quit();
-            
         }
     }
 }

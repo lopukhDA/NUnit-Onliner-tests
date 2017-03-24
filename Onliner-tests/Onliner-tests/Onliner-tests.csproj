@@ -61,17 +61,15 @@
     <Compile Include="WebDriver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\packages\Selenium.WebDriver.MicrosoftWebDriver.10.0.14393.0\driver\MicrosoftWebDriver.exe">
-      <Link>MicrosoftWebDriver.exe</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="extent-config.xml" />
   </ItemGroup>
   <ItemGroup>

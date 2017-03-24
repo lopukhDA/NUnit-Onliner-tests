@@ -17,6 +17,7 @@ namespace Onliner_tests.PageObject
         public void Open()
         {
             _driver.Navigate("https://www.onliner.by/");
+            _test.Log(LogStatus.Info, $"Go to page https://www.onliner.by/");
         }
 
         public By Username { get; set; } = By.CssSelector(".user-name a");
@@ -32,7 +33,7 @@ namespace Onliner_tests.PageObject
             _driver.SendKeys(LoginInput, username);
             _test.Log(LogStatus.Info, $"Input username '{username}'");
             _driver.SendKeys(PasswordInput, password);
-            _test.Log(LogStatus.Info, $"Input username '{password}'");
+            _test.Log(LogStatus.Info, $"Input password '{password}'");
             _driver.Click(SubmitLoginButton);
         }
     }
