@@ -2,9 +2,11 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace Onliner_tests
 {
@@ -13,7 +15,7 @@ namespace Onliner_tests
         private IWebDriver _driver;
         private IWait<IWebDriver> _wait;
 
-        public WebDriver()  
+        public WebDriver()
         {
             _driver = new ChromeDriver();
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
@@ -21,22 +23,52 @@ namespace Onliner_tests
 
         public WebDriver(string driverType)
         {
-
-            switch (driverType)
+            if (ConfigurationManager.AppSettings.Get("Grid") == "true")
             {
-                case "Firefox":
-                    _driver = new FirefoxDriver();
-                    break;
-                case "IE":
-                    _driver = new InternetExplorerDriver();
-                    break;
-                case "Chrome":
-                    _driver = new ChromeDriver();
-                    break;
-                default:
-                    _driver = new ChromeDriver();
-                    break;
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                switch (driverType)
+                {
+                    case "Firefox":
+                        capabilities = DesiredCapabilities.Firefox();
+                        capabilities.SetCapability(CapabilityType.BrowserName, "firefox");
+                        break;
+                    case "IE":
+                        capabilities = DesiredCapabilities.InternetExplorer();
+                        capabilities.SetCapability(CapabilityType.BrowserName, "internet explorer");
+                        break;
+                    case "Chrome":
+                        capabilities = DesiredCapabilities.Chrome();
+                        capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
+                        break;
+                    default:
+                        capabilities = DesiredCapabilities.Chrome();
+                        capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
+                        break;
+                }
+                capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                capabilities.SetCapability("marionette", true);
+                _driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), capabilities);
             }
+            
+            else
+            {
+                switch (driverType)
+                {
+                    case "Firefox":
+                        _driver = new FirefoxDriver();
+                        break;
+                    case "IE":
+                        _driver = new InternetExplorerDriver();
+                        break;
+                    case "Chrome":
+                        _driver = new ChromeDriver();
+                        break;
+                    default:
+                        _driver = new ChromeDriver();
+                        break;
+                }
+            }
+            
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
 
         }
@@ -98,25 +130,25 @@ namespace Onliner_tests
         {
             IList<IWebElement> allElements = _driver.FindElements(locator);
             return allElements;
-            
+
         }
-        
+
         public IWebDriver GetNativeDriver() => _driver;
 
-        public  void WaitForElementIsVisible(IWebElement element, int timeout = 30)
+        public void WaitForElementIsVisible(IWebElement element, int timeout = 30)
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.Until(d => element.Displayed);
         }
 
-        public  IWebElement FindElementWithWaiting(By by, int timeout = 30)
+        public IWebElement FindElementWithWaiting(By by, int timeout = 30)
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             return wait.Until(d => d.FindElement(by));
         }
 
-        public  void WaitWhileElementClassContainsText(By by, string text, int timeout = 30)
+        public void WaitWhileElementClassContainsText(By by, string text, int timeout = 30)
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));

@@ -14,7 +14,7 @@
     <protocol>https</protocol>
 
     <!-- title of the document -->
-    <documentTitle>AutomationTesting.in</documentTitle>
+    <documentTitle>Onliner tests report</documentTitle>
 
     <!-- report name - displayed at top-nav -->
     <reportName>Automation Testing Report</reportName>

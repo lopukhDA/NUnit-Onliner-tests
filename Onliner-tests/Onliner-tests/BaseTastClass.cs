@@ -37,7 +37,6 @@ namespace Onliner_tests
         public void Setup()
         {
             _webDriver = new WebDriver(ConfigurationManager.AppSettings.Get("DriverType"));
-            
             //var loginPage = new PageObject.LoginPage(_webDriver);
             //loginPage.Open();
             //loginPage.Login("lopukh.d.a@yandex.ru", "testpassword");
