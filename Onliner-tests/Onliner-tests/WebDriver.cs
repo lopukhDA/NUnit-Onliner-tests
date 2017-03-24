@@ -130,7 +130,7 @@ namespace Onliner_tests
 
         public IWebElement WaitElement(By locator)
         {
-            _log.Log($"Weiting locator {locator} ");
+            _log.Log($"Waiting locator {locator} ");
             IWebElement element = _wait.Until(ExpectedConditions.ElementIsVisible(locator));
             return element;
         }
