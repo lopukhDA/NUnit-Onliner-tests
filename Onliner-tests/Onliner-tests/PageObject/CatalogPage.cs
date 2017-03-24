@@ -7,18 +7,19 @@ namespace Onliner_tests.PageObject
 {
     class CatalogPage
     {
-        public CatalogPage(WebDriver driver, ExtentTest test)
+        private LoggerClass _log;
+        private WebDriver _driver;
+
+        public CatalogPage(WebDriver driver, LoggerClass log)
         {
             _driver = driver;
-            _test = test;
+            _log = log;
         }
-        private WebDriver _driver;
-        private ExtentTest _test;
+        
 
         public void Open()
         {
             _driver.Navigate("https://catalog.onliner.by/notebook");
-            _test.Log(LogStatus.Info, $"Go to page https://catalog.onliner.by/notebook");
         }
 
         public By MinPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]");
@@ -33,9 +34,7 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
-            _test.Log(LogStatus.Info, $"Input minfilter price {minPrise.ToString()}");
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
-            _test.Log(LogStatus.Info, $"Input maxfilter price {maxPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
         }
 
@@ -43,7 +42,6 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
-            _test.Log(LogStatus.Info, $"Input minfilter price {minPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
             
@@ -66,7 +64,6 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
-            _test.Log(LogStatus.Info, $"Input maxfilter price {maxPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
         }
@@ -75,9 +72,7 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
-            _test.Log(LogStatus.Info, $"Input minfilter price {minPrise.ToString()}");
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
-            _test.Log(LogStatus.Info, $"Input maxfilter price {maxPrise.ToString()}");
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
         }

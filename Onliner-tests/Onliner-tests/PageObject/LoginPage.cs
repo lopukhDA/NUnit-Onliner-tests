@@ -5,19 +5,19 @@ namespace Onliner_tests.PageObject
 {
     public class LoginPage
     {
-       
-        public LoginPage(WebDriver driver, ExtentTest test)
+        private WebDriver _driver;
+        private LoggerClass _log;
+
+        public LoginPage(WebDriver driver, LoggerClass log)
         {
             _driver = driver;
-            _test = test;
+            _log = log;
         }
-        private WebDriver _driver;
-        private ExtentTest _test;
+        
 
         public void Open()
         {
             _driver.Navigate("https://www.onliner.by/");
-            _test.Log(LogStatus.Info, $"Go to page https://www.onliner.by/");
         }
 
         public By Username { get; set; } = By.CssSelector(".user-name a");
@@ -29,11 +29,8 @@ namespace Onliner_tests.PageObject
         public void Login(string username, string password)
         {
             _driver.Click(ButtonShowFormLogin);
-            _test.Log(LogStatus.Info, $"Click to locator {ButtonShowFormLogin}");
             _driver.SendKeys(LoginInput, username);
-            _test.Log(LogStatus.Info, $"Input username '{username}'");
             _driver.SendKeys(PasswordInput, password);
-            _test.Log(LogStatus.Info, $"Input password '{password}'");
             _driver.Click(SubmitLoginButton);
         }
     }

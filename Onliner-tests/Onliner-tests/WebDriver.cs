@@ -15,15 +15,17 @@ namespace Onliner_tests
     {
         private IWebDriver _driver;
         private IWait<IWebDriver> _wait;
-        private ExtentTest test;
+        private LoggerClass _log;
+        
 
-        public WebDriver()
+        public WebDriver(LoggerClass log)
         {
             _driver = new ChromeDriver();
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+            _log = log;
         }
 
-        public WebDriver(string driverType)
+        public WebDriver(string driverType, LoggerClass log)
         {
             if (ConfigurationManager.AppSettings.Get("Grid") == "true")
             {
@@ -72,65 +74,74 @@ namespace Onliner_tests
             }
             
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+            _log = log;
 
         }
 
         public void Quit()
         {
-            Console.WriteLine("Test Quit");
+            _log.Log("Test Quit");
             _driver.Manage().Cookies.DeleteAllCookies();
             _driver.Quit();
         }
 
         public void Navigate(string url)
         {
-            Console.WriteLine($"Navigating is {url}");
+            _log.Log($"Navigating is {url}");
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
         }
 
         public void Click(IWebElement element)
         {
+            _log.Log($"Click to WebElement");
             WaitForElementIsVisible(element);
             element.Click();
         }
 
         public void SendKeys(By locator, string text)
         {
-            Console.WriteLine($"Text '{text}' entered in the locator {locator}");
+            _log.Log($"Text '{text}' entered in the locator {locator}");
             var element = FindElementWithWaiting(locator);
             element.SendKeys(text);
         }
 
         public void Click(By locator)
         {
+            _log.Log($"Click to locator {locator}");
             var el = FindElementWithWaiting(locator);
             el.Click();
         }
 
         public string GetTitle()
         {
+            _log.Log($"Get Title page ({_driver.Title})");
             return _driver.Title;
         }
 
         public string GetText(IWebElement element)
         {
+            var locatoin = element.Location;
+            _log.Log($"Get WebElement text ({element.Text})");
             return element.Text;
         }
 
         public string GetText(By locator)
         {
+            _log.Log($"Get text locator {locator} ({FindElementWithWaiting(locator).Text})");
             return FindElementWithWaiting(locator).Text;
         }
 
         public IWebElement WaitElement(By locator)
         {
+            _log.Log($"Weiting locator {locator} ");
             IWebElement element = _wait.Until(ExpectedConditions.ElementIsVisible(locator));
             return element;
         }
 
         public IList<IWebElement> FindAllElements(By locator)
         {
+            _log.Log($"Getting the list of elements by locator {locator} ");
             IList<IWebElement> allElements = _driver.FindElements(locator);
             return allElements;
 
