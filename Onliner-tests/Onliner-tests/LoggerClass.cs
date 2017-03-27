@@ -16,19 +16,26 @@ namespace Onliner_tests
             _test = test;
         }
 
+        private static object _lock = new object();
+        private static int _countReport = 0;
+
         public void OneSetUp()
         {
-            string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
-            string actualPath = path.Substring(0, path.LastIndexOf("bin"));
-            string projectPath = new Uri(actualPath).LocalPath;
-            string reportPath = projectPath + "Reports\\MyOwnReport.html";
+            lock (_lock)
+            {
+                _countReport++;
+                string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+                string actualPath = path.Substring(0, path.LastIndexOf("bin"));
+                string projectPath = new Uri(actualPath).LocalPath;
+                string reportPath = projectPath + "Reports\\Report" + TestContext.CurrentContext.Test.FullName + ".html";
 
-            _extent = new ExtentReports(reportPath, true);
-            _extent
-                .AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"))
-                .AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"))
-                .AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"));
-            _extent.LoadConfig(projectPath + "extent-config.xml");
+                _extent = new ExtentReports(reportPath, true);
+                _extent
+                    .AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"))
+                    .AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"))
+                    .AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"));
+                _extent.LoadConfig(projectPath + "extent-config.xml");
+            }
         }
 
         public void OneTearDown()
@@ -50,7 +57,7 @@ namespace Onliner_tests
             _extent.EndTest(_test);
             _test.Log(LogStatus.Info, "EndTest() method will stop capturing information about the test log");
         }
-        
+
         public void StartTest(string testname)
         {
             _test = _extent.StartTest(testname);

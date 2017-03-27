@@ -52,7 +52,7 @@ Onliner tests report                            </title>
                                         <i class='mdi-hardware-desktop-windows'></i>
                                     </li>
                                     <li>
-                                        <span class='suite-started-time'>2017-03-24 18:11:24</span>
+                                        <span class='suite-started-time'>2017-03-27 18:47:09</span>
                                     </li>
                                     <li>
                                         <span>v2.41.0</span>
@@ -81,19 +81,19 @@ Onliner tests report                            </title>
                                         <div class='col l4 m4 s12'>
                                             <div class='card suite-time'> 
                                                 <span class='panel-name'>Total Time Taken</span> 
-                                                <span class='suite-total-time-taken panel-lead'>0h 1m 33s+408ms</span> 
+                                                <span class='suite-total-time-taken panel-lead'>0h 0m 51s+861ms</span> 
                                             </div> 
                                         </div>
                                         <div class='col l2 m6 s6 suite-start-time'>
                                             <div class='card green-accent'> 
                                                 <span class='panel-name'>Start</span> 
-                                                <span class='panel-lead suite-started-time'>2017-03-24 18:11:24</span> 
+                                                <span class='panel-lead suite-started-time'>2017-03-27 18:47:09</span> 
                                             </div> 
                                         </div>
                                         <div class='col l2 m6 s6 suite-end-time'>
                                             <div class='card pink-accent'> 
                                                 <span class='panel-name'>End</span> 
-                                                <span class='panel-lead suite-ended-time'>2017-03-24 18:12:57</span> 
+                                                <span class='panel-lead suite-ended-time'>2017-03-27 18:48:01</span> 
                                             </div> 
                                         </div>
                                     </div>
@@ -233,7 +233,61 @@ Onliner tests report                            </title>
                                             <div class='card-panel no-padding-h no-padding-v'>
                                                 <div class='wrapper'>
                                                     <ul id='test-collection' class='test-collection'>
-                                                            <li class='collection-item test displayed active pass ' extentid='e730b123-def6-435c-891b-3483af88b130'>
+                                                            <li class='collection-item test displayed active pass ' extentid='14309114-dafa-4723-a2f8-7592c0d05d9a'>
+                                                                <div class='test-head'>
+                                                                    <span class='test-name'>SuccessfulFilterForMaxAndMinPrice(300, 500) </span>
+                                                                    <span class='test-status right label capitalize outline pass'>pass</span>
+                                                                    <span class='category-assigned hide '></span>
+                                                                </div>
+                                                                <div class='test-body'>
+                                                                    <div class='test-info'>
+                                                                        <span title='Test started time' alt='Test started time' class='test-started-time label green lighten-2 text-white'>2017-03-27 18:47:12</span>
+                                                                        <span title='Test ended time' alt='Test ended time' class='test-ended-time label red lighten-2 text-white'>2017-03-27 18:47:29</span>
+                                                                        <span title='Time taken to finish' alt='Time taken to finish' class='test-time-taken label blue-grey lighten-3 text-white'>0h 0m 16s+676ms</span>
+                                                                    </div>
+                                                                    <div class='test-desc'></div>
+                                                                    <div class='test-attributes'>
+                                                                                                                                            </div>
+                                                                    <div class='test-steps'>
+                                                                            <table class='bordered table-results'>
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Status</th>
+                                                                                        <th>Timestamp</th>
+                                                                                        <th>Details</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:12</td>                                                                                            <td class='step-details'>Navigating is https://catalog.onliner.by/notebook</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:25</td>                                                                                            <td class='step-details'>Waiting locator By.ClassName[Contains]: schema-filter-button__state_disabled </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:26</td>                                                                                            <td class='step-details'>Text '300' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:26</td>                                                                                            <td class='step-details'>Text '500' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:26</td>                                                                                            <td class='step-details'>Waiting locator By.CssSelector: .schema-tags__item span </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:28</td>                                                                                            <td class='step-details'>Getting the list of elements by locator By.CssSelector: .schema-product__price-value.schema-product__price-value_primary span </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status pass'><i class='mdi-action-check-circle'></i></td><td class='timestamp'>18:47:29</td>                                                                                            <td class='step-details'>The interval filter works correctly</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:29</td>                                                                                            <td class='step-details'>EndTest() method will stop capturing information about the test log</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:29</td>                                                                                            <td class='step-details'>Test Quit</td>
+                                                                                        </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div></div></li>                                                            <li class='collection-item test displayed active pass ' extentid='408174a6-3ed3-4c8a-bda7-7e73f2143bac'>
                                                                 <div class='test-head'>
                                                                     <span class='test-name'>SuccessfulFilterForMaxPrice(500) </span>
                                                                     <span class='test-status right label capitalize outline pass'>pass</span>
@@ -241,9 +295,9 @@ Onliner tests report                            </title>
                                                                 </div>
                                                                 <div class='test-body'>
                                                                     <div class='test-info'>
-                                                                        <span title='Test started time' alt='Test started time' class='test-started-time label green lighten-2 text-white'>2017-03-24 18:11:27</span>
-                                                                        <span title='Test ended time' alt='Test ended time' class='test-ended-time label red lighten-2 text-white'>2017-03-24 18:11:53</span>
-                                                                        <span title='Time taken to finish' alt='Time taken to finish' class='test-time-taken label blue-grey lighten-3 text-white'>0h 0m 26s+190ms</span>
+                                                                        <span title='Test started time' alt='Test started time' class='test-started-time label green lighten-2 text-white'>2017-03-27 18:47:32</span>
+                                                                        <span title='Test ended time' alt='Test ended time' class='test-ended-time label red lighten-2 text-white'>2017-03-27 18:47:44</span>
+                                                                        <span title='Time taken to finish' alt='Time taken to finish' class='test-time-taken label blue-grey lighten-3 text-white'>0h 0m 11s+801ms</span>
                                                                     </div>
                                                                     <div class='test-desc'></div>
                                                                     <div class='test-attributes'>
@@ -259,42 +313,42 @@ Onliner tests report                            </title>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:27</td>                                                                                            <td class='step-details'>Navigating is https://catalog.onliner.by/notebook</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:32</td>                                                                                            <td class='step-details'>Navigating is https://catalog.onliner.by/notebook</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:49</td>                                                                                            <td class='step-details'>Waiting locator By.ClassName[Contains]: schema-filter-button__state_disabled </td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:41</td>                                                                                            <td class='step-details'>Waiting locator By.ClassName[Contains]: schema-filter-button__state_disabled </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:49</td>                                                                                            <td class='step-details'>Text '500' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:41</td>                                                                                            <td class='step-details'>Text '500' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:49</td>                                                                                            <td class='step-details'>Waiting locator By.CssSelector: .schema-tags__item span </td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:41</td>                                                                                            <td class='step-details'>Waiting locator By.CssSelector: .schema-tags__item span </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:52</td>                                                                                            <td class='step-details'>Getting the list of elements by locator By.CssSelector: .schema-product__price-value.schema-product__price-value_primary span </td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:43</td>                                                                                            <td class='step-details'>Getting the list of elements by locator By.CssSelector: .schema-product__price-value.schema-product__price-value_primary span </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status pass'><i class='mdi-action-check-circle'></i></td><td class='timestamp'>18:11:53</td>                                                                                            <td class='step-details'>The minimum filter works correctly</td>
+                                                                                            <td class='status pass'><i class='mdi-action-check-circle'></i></td><td class='timestamp'>18:47:44</td>                                                                                            <td class='step-details'>The minimum filter works correctly</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:53</td>                                                                                            <td class='step-details'>EndTest() method will stop capturing information about the test log</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:44</td>                                                                                            <td class='step-details'>EndTest() method will stop capturing information about the test log</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:53</td>                                                                                            <td class='step-details'>Test Quit</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:44</td>                                                                                            <td class='step-details'>Test Quit</td>
                                                                                         </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                        </div></div></li>                                                            <li class='collection-item test displayed active pass ' extentid='2a4ae44f-61e5-4e4c-92e0-36838b999b6e'>
+                                                                        </div></div></li>                                                            <li class='collection-item test displayed active pass ' extentid='dd69e109-5851-4898-9669-ba390048cc1e'>
                                                                 <div class='test-head'>
-                                                                    <span class='test-name'>SuccessfulFilterForMaxPrice(1000) </span>
+                                                                    <span class='test-name'>SuccessfulFilterForMinPrice(342) </span>
                                                                     <span class='test-status right label capitalize outline pass'>pass</span>
                                                                     <span class='category-assigned hide '></span>
                                                                 </div>
                                                                 <div class='test-body'>
                                                                     <div class='test-info'>
-                                                                        <span title='Test started time' alt='Test started time' class='test-started-time label green lighten-2 text-white'>2017-03-24 18:11:57</span>
-                                                                        <span title='Test ended time' alt='Test ended time' class='test-ended-time label red lighten-2 text-white'>2017-03-24 18:12:34</span>
-                                                                        <span title='Time taken to finish' alt='Time taken to finish' class='test-time-taken label blue-grey lighten-3 text-white'>0h 0m 36s+788ms</span>
+                                                                        <span title='Test started time' alt='Test started time' class='test-started-time label green lighten-2 text-white'>2017-03-27 18:47:47</span>
+                                                                        <span title='Test ended time' alt='Test ended time' class='test-ended-time label red lighten-2 text-white'>2017-03-27 18:48:00</span>
+                                                                        <span title='Time taken to finish' alt='Time taken to finish' class='test-time-taken label blue-grey lighten-3 text-white'>0h 0m 13s+402ms</span>
                                                                     </div>
                                                                     <div class='test-desc'></div>
                                                                     <div class='test-attributes'>
@@ -310,79 +364,28 @@ Onliner tests report                            </title>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:11:57</td>                                                                                            <td class='step-details'>Navigating is https://catalog.onliner.by/notebook</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:47</td>                                                                                            <td class='step-details'>Navigating is https://catalog.onliner.by/notebook</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:22</td>                                                                                            <td class='step-details'>Waiting locator By.ClassName[Contains]: schema-filter-button__state_disabled </td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:52</td>                                                                                            <td class='step-details'>Waiting locator By.ClassName[Contains]: schema-filter-button__state_disabled </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:22</td>                                                                                            <td class='step-details'>Text '1000' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:53</td>                                                                                            <td class='step-details'>Text '342' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:23</td>                                                                                            <td class='step-details'>Waiting locator By.CssSelector: .schema-tags__item span </td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:54</td>                                                                                            <td class='step-details'>Waiting locator By.CssSelector: .schema-tags__item span </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:27</td>                                                                                            <td class='step-details'>Getting the list of elements by locator By.CssSelector: .schema-product__price-value.schema-product__price-value_primary span </td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:47:57</td>                                                                                            <td class='step-details'>Getting the list of elements by locator By.CssSelector: .schema-product__price-value.schema-product__price-value_primary span </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status pass'><i class='mdi-action-check-circle'></i></td><td class='timestamp'>18:12:34</td>                                                                                            <td class='step-details'>The minimum filter works correctly</td>
+                                                                                            <td class='status pass'><i class='mdi-action-check-circle'></i></td><td class='timestamp'>18:48:00</td>                                                                                            <td class='step-details'>The maximum filter works correctly</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:34</td>                                                                                            <td class='step-details'>EndTest() method will stop capturing information about the test log</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:48:00</td>                                                                                            <td class='step-details'>EndTest() method will stop capturing information about the test log</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:34</td>                                                                                            <td class='step-details'>Test Quit</td>
-                                                                                        </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div></div></li>                                                            <li class='collection-item test displayed active pass ' extentid='2299a7a6-fb5c-49ab-bf36-4708a4740e97'>
-                                                                <div class='test-head'>
-                                                                    <span class='test-name'>SuccessfulFilterForMaxPrice(800) </span>
-                                                                    <span class='test-status right label capitalize outline pass'>pass</span>
-                                                                    <span class='category-assigned hide '></span>
-                                                                </div>
-                                                                <div class='test-body'>
-                                                                    <div class='test-info'>
-                                                                        <span title='Test started time' alt='Test started time' class='test-started-time label green lighten-2 text-white'>2017-03-24 18:12:37</span>
-                                                                        <span title='Test ended time' alt='Test ended time' class='test-ended-time label red lighten-2 text-white'>2017-03-24 18:12:56</span>
-                                                                        <span title='Time taken to finish' alt='Time taken to finish' class='test-time-taken label blue-grey lighten-3 text-white'>0h 0m 19s+615ms</span>
-                                                                    </div>
-                                                                    <div class='test-desc'></div>
-                                                                    <div class='test-attributes'>
-                                                                                                                                            </div>
-                                                                    <div class='test-steps'>
-                                                                            <table class='bordered table-results'>
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Status</th>
-                                                                                        <th>Timestamp</th>
-                                                                                        <th>Details</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:37</td>                                                                                            <td class='step-details'>Navigating is https://catalog.onliner.by/notebook</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:48</td>                                                                                            <td class='step-details'>Waiting locator By.ClassName[Contains]: schema-filter-button__state_disabled </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:49</td>                                                                                            <td class='step-details'>Text '800' entered in the locator By.XPath: //input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:49</td>                                                                                            <td class='step-details'>Waiting locator By.CssSelector: .schema-tags__item span </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:52</td>                                                                                            <td class='step-details'>Getting the list of elements by locator By.CssSelector: .schema-product__price-value.schema-product__price-value_primary span </td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status pass'><i class='mdi-action-check-circle'></i></td><td class='timestamp'>18:12:56</td>                                                                                            <td class='step-details'>The minimum filter works correctly</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:56</td>                                                                                            <td class='step-details'>EndTest() method will stop capturing information about the test log</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:12:56</td>                                                                                            <td class='step-details'>Test Quit</td>
+                                                                                            <td class='status info'><i class='mdi-action-info-outline'></i></td><td class='timestamp'>18:48:00</td>                                                                                            <td class='step-details'>Test Quit</td>
                                                                                         </tr>
                                                                                 </tbody>
                                                                             </table>

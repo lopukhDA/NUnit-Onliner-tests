@@ -54,10 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTastClass.cs" />
-    <Compile Include="IntervalPriceOnlinerTests.cs" />
+    <Compile Include="FilterOnlinerTests.cs" />
     <Compile Include="LoggerClass.cs" />
-    <Compile Include="MaxPriceOnlinerTests.cs" />
-    <Compile Include="MinPriceOnlinerTests.cs" />
     <Compile Include="PageObject\CatalogPage.cs" />
     <Compile Include="PageObject\LoginPage.cs" />
     <Compile Include="OnlinerTestsClass.cs" />
