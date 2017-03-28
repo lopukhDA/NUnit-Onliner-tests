@@ -1,10 +1,7 @@
 ﻿using NUnit.Framework;
 using RelevantCodes.ExtentReports;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Onliner_tests
 {
@@ -20,7 +17,7 @@ namespace Onliner_tests
             catalogPage.Open();
             double maxPrice = max;
             catalogPage.InputFilterOnlyMaxPriceAndWaitComplitePrice(maxPrice);
-            string[] price = catalogPage.GetAllPriceInThisPage();
+            double[] price = catalogPage.GetAllPriceInThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -41,7 +38,7 @@ namespace Onliner_tests
             catalogPage.Open();
             double minPrice = m;
             catalogPage.InputFilterOnlyMinPriceAndWaitComplitePrice(minPrice);
-            string[] price = catalogPage.GetAllPriceInThisPage();
+            double[] price = catalogPage.GetAllPriceInThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -64,7 +61,7 @@ namespace Onliner_tests
             double minPrice = min;
             double maxPrice = max;
             catalogPage.InputFilterFullPriceAndWaitComplitePrice(minPrice, maxPrice);
-            string[] price = catalogPage.GetAllPriceInThisPage();
+            double[] price = catalogPage.GetAllPriceInThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {

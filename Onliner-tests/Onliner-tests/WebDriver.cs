@@ -135,6 +135,13 @@ namespace Onliner_tests
             return element;
         }
 
+        public void WaitElementAll(By locator)
+        {
+            _log.Log($"Waiting locator {locator} ");
+            _wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(locator));
+            
+        }
+
         public IList<IWebElement> FindAllElements(By locator)
         {
             _log.Log($"Getting the list of elements by locator {locator} ");
@@ -149,6 +156,11 @@ namespace Onliner_tests
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.Until(d => element.Displayed);
+        }
+
+        public void WaitElNEW()
+        {
+            
         }
 
         public IWebElement FindElementWithWaiting(By by, int timeout = 30)
