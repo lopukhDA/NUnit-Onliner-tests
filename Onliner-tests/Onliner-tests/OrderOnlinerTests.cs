@@ -42,5 +42,30 @@ namespace Onliner_tests
             Assert.AreEqual(price, priceSortDESC, "Error, wrong sorting of prices");
             log.Log(LogStatus.Pass, "The order price by DESC works correctly");
         }
+
+        [Test]
+        public void SuccessfulOrderRating()
+        {
+            log.StartTest("SuccessfulOrderRating");
+            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            catalogPage.Open();
+            catalogPage.ClickOrderRating();
+            int[] stars = catalogPage.GetAllStarsInThisPage();
+            //bool error = false;
+            for(int i=0; i<stars.Length -1; i++)
+            {
+                if (stars[i] < stars[i + 1])
+                {
+                    Assert.Fail("Error! The order rating not works");
+                    break;
+                }
+            }
+            //double[] priceSortDESC = catalogPage.GetAllPriceInThisPage();
+            //Array.Sort(priceSortDESC);
+            //Array.Reverse(priceSortDESC);
+
+            //Assert.AreEqual(price, priceSortDESC, "Error, wrong sorting of prices");
+            log.Log(LogStatus.Pass, "The order rating  works correctly");
+        }
     }
 }

@@ -32,6 +32,8 @@ namespace Onliner_tests.PageObject
         public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");
         public By OrderPriceASC { get; set; } = By.CssSelector(".schema-order__item:nth-child(2)");
         public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
+        public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
+        public By RatingStar { get; set; } = By.CssSelector(".rating");
 
         public void InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(double minPrise, double maxPrise)
         {
@@ -57,7 +59,7 @@ namespace Onliner_tests.PageObject
             int i = 0;
             foreach (IWebElement element in allElements)
             {
-                String price = element.GetAttribute("innerHTML").Replace("&nbsp", "").Replace("р.", "").Replace(";", "").Replace(",", ".");
+                String price = element.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", ".");
                 allPriceText[i++] = Convert.ToDouble(price);
             }
             return allPriceText;
@@ -96,6 +98,33 @@ namespace Onliner_tests.PageObject
             _driver.Click(OrderPriceDESC);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
             _driver.WaitElementAll(PriceProducts);
+        }
+
+        public void ClickOrderRating()
+        {
+            _driver.WaitElement(Filter);
+            _driver.Click(ShowOrderLink);
+            _driver.Click(OrderRating);
+            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+            Thread.Sleep(1000);
+            _driver.WaitElementAll(RatingStar);
+        }
+
+        public int[] GetAllStarsInThisPage()
+        {
+            IList<IWebElement> allElements = _driver.FindAllElements(RatingStar);
+            int[] allPriceText = new int[allElements.Count];
+            int i = 0;
+            foreach (IWebElement element in allElements)
+            {
+                String stars = element.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", "");
+                allPriceText[i++] = Convert.ToInt32(stars);
+            }
+            //return allPriceText;
+
+
+            //int[] a = new int[10];
+            return allPriceText;
         }
 
     }
