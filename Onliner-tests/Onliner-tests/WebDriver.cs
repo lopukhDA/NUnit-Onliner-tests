@@ -47,9 +47,30 @@ namespace Onliner_tests
                         capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
                         break;
                 }
-                capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                switch (ConfigurationManager.AppSettings.Get("PlatformType"))
+                {
+                    case "Windows":
+                        capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                        break;
+                    case "Linux":
+                        capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Linux));
+                        break;
+                    case "Mac":
+                        capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Mac));
+                        break;
+                    case "Unix":
+                        capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Unix));
+                        break;
+                    case "XP":
+                        capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.XP));
+                        break;
+                    default:
+                        capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                        break;
+                }
+
                 capabilities.SetCapability("marionette", true);
-                _driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), capabilities);
+                _driver = new RemoteWebDriver(new Uri("http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub"), capabilities);
             }
             else
             {
@@ -159,7 +180,7 @@ namespace Onliner_tests
         public IList<IWebElement> WaitAllElNEW(By locator)
         {
             _log.Log($"Waiting all elements by locator {locator} ");
-            IList<IWebElement> allElements =  _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
+            IList<IWebElement> allElements = _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
             return allElements;
         }
 
@@ -177,7 +198,5 @@ namespace Onliner_tests
             wait.Until(d => !d.FindElement(by).GetAttribute("class").Contains(text));
         }
 
-        
     }
-
 }
