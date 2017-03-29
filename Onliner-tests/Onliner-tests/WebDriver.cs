@@ -111,7 +111,7 @@ namespace Onliner_tests
 
         public void Click(IWebElement element)
         {
-            _log.Log($"Click to WebElement");
+            _log.Log($"Click to WebElement {element.TagName}");
             WaitForElementIsVisible(element);
             element.Click();
         }
@@ -138,15 +138,15 @@ namespace Onliner_tests
 
         public string GetText(IWebElement element)
         {
-            var locatoin = element.Location;
             _log.Log($"Get WebElement text ({element.Text})");
             return element.Text;
         }
 
         public string GetText(By locator)
         {
-            _log.Log($"Get text locator {locator} ({FindElementWithWaiting(locator).Text})");
-            return FindElementWithWaiting(locator).Text;
+            string text = FindElementWithWaiting(locator).Text;
+            _log.Log($"Get text locator {locator} ({text})");
+            return text;
         }
 
         public IWebElement WaitElement(By locator)
@@ -175,13 +175,6 @@ namespace Onliner_tests
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.Until(d => element.Displayed);
-        }
-
-        public IList<IWebElement> WaitAllElNEW(By locator)
-        {
-            _log.Log($"Waiting all elements by locator {locator} ");
-            IList<IWebElement> allElements = _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
-            return allElements;
         }
 
         public IWebElement FindElementWithWaiting(By by, int timeout = 30)

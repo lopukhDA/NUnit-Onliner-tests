@@ -33,7 +33,13 @@ namespace Onliner_tests
                 _extent
                     .AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"))
                     .AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"))
-                    .AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"));
+                    .AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"))
+                    .AddSystemInfo("OSVersion", Environment.OSVersion.VersionString);
+                if(ConfigurationManager.AppSettings.Get("Grid") == "true")
+                {
+                    _extent.AddSystemInfo("localhost", "http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub");
+                    _extent.AddSystemInfo("Grid node PlatformType", ConfigurationManager.AppSettings.Get("PlatformType"));
+                }
                 _extent.LoadConfig(projectPath + "extent-config.xml");
             }
         }
