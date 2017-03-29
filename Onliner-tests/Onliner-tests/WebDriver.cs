@@ -137,9 +137,8 @@ namespace Onliner_tests
 
         public void WaitElementAll(By locator)
         {
-            _log.Log($"Waiting locator {locator} ");
+            _log.Log($"Waiting all elements by locator {locator} ");
             _wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(locator));
-            
         }
 
         public IList<IWebElement> FindAllElements(By locator)
@@ -147,7 +146,6 @@ namespace Onliner_tests
             _log.Log($"Getting the list of elements by locator {locator} ");
             IList<IWebElement> allElements = _driver.FindElements(locator);
             return allElements;
-
         }
 
         public IWebDriver GetNativeDriver() => _driver;
@@ -158,9 +156,11 @@ namespace Onliner_tests
             wait.Until(d => element.Displayed);
         }
 
-        public void WaitElNEW()
+        public IList<IWebElement> WaitAllElNEW(By locator)
         {
-            
+            _log.Log($"Waiting all elements by locator {locator} ");
+            IList<IWebElement> allElements =  _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
+            return allElements;
         }
 
         public IWebElement FindElementWithWaiting(By by, int timeout = 30)
@@ -176,6 +176,8 @@ namespace Onliner_tests
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             wait.Until(d => !d.FindElement(by).GetAttribute("class").Contains(text));
         }
+
+        
     }
 
 }

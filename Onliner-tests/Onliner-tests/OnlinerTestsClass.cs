@@ -13,7 +13,6 @@ namespace Onliner_tests
         [TestCaseSource(typeof(DataForTests), "DataTestAccount")]
         public void SuccessLogin(string login, string pass)
         {
-            //TestContext.CurrentContext.Test.FullName;
             log.StartTest($"SuccessLogin({login}, {pass})");
             var loginPage = new PageObject.LoginPage(_webDriver, log);
             loginPage.Open();

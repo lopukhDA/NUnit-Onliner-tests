@@ -15,7 +15,7 @@ namespace Onliner_tests.PageObject
             _driver = driver;
             _log = log;
         }
-        
+
         public void Open()
         {
             _driver.Navigate("https://catalog.onliner.by/notebook");
@@ -34,6 +34,8 @@ namespace Onliner_tests.PageObject
         public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
         public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
         public By RatingStar { get; set; } = By.CssSelector(".rating");
+        public By SchemaFilter { get; set; } = By.CssSelector(".schema-filter-button__state_initial");
+        public By SchemaFilterProcessing { get; set; } = By.CssSelector(".schema-products_processing");
 
         public void InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(double minPrise, double maxPrise)
         {
@@ -49,20 +51,7 @@ namespace Onliner_tests.PageObject
             _driver.SendKeys(MinPriceInput, minPrise.ToString());
             _driver.WaitElement(FilterPrice);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            
-        }
 
-        public double[] GetAllPriceInThisPage()
-        {
-            IList<IWebElement> allElements = _driver.FindAllElements(PriceProducts);
-            double[] allPriceText = new double[allElements.Count];
-            int i = 0;
-            foreach (IWebElement element in allElements)
-            {
-                String price = element.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", ".");
-                allPriceText[i++] = Convert.ToDouble(price);
-            }
-            return allPriceText;
         }
 
         public void InputFilterOnlyMaxPriceAndWaitComplitePrice(double maxPrise)
@@ -88,7 +77,7 @@ namespace Onliner_tests.PageObject
             _driver.Click(ShowOrderLink);
             _driver.Click(OrderPriceASC);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            _driver.WaitElementAll(PriceProducts); 
+            _driver.WaitElementAll(PriceProducts);
         }
 
         public void ClickOrderPriceDESC()
@@ -105,25 +94,42 @@ namespace Onliner_tests.PageObject
             _driver.WaitElement(Filter);
             _driver.Click(ShowOrderLink);
             _driver.Click(OrderRating);
+            _driver.WaitElement(SchemaFilterProcessing);
+            _driver.WaitElement(LoadingProductProcessing);
+
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            Thread.Sleep(1000);
-            _driver.WaitElementAll(RatingStar);
+            //_driver.WaitAllElNEW(RatingStar);
+            _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+
+            //Thread.Sleep(2000);
+            
+            //schema-filter-button__state schema-filter-button__state_initial schema-filter-button__state_disabled schema-filter-button__state_animated
+            //schema-filter-button__state schema-filter-button__state_initial schema-filter-button__state_disabled
         }
 
         public int[] GetAllStarsInThisPage()
         {
-            IList<IWebElement> allElements = _driver.FindAllElements(RatingStar);
-            int[] allPriceText = new int[allElements.Count];
+            IList<IWebElement> allElements = _driver.FindAllElements(By.CssSelector(".rating"));
+            int[] allStarsText = new int[allElements.Count];
             int i = 0;
             foreach (IWebElement element in allElements)
             {
                 String stars = element.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", "");
-                allPriceText[i++] = Convert.ToInt32(stars);
+                allStarsText[i++] = Convert.ToInt32(stars);
             }
-            //return allPriceText;
+            return allStarsText;
+        }
 
-
-            //int[] a = new int[10];
+        public double[] GetAllPriceInThisPage()
+        {
+            IList<IWebElement> allElements = _driver.FindAllElements(PriceProducts);
+            double[] allPriceText = new double[allElements.Count];
+            int i = 0;
+            foreach (IWebElement element in allElements)
+            {
+                String price = element.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", ".");
+                allPriceText[i++] = Convert.ToDouble(price);
+            }
             return allPriceText;
         }
 
