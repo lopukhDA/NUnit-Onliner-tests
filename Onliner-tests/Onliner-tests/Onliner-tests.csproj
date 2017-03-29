@@ -57,6 +57,7 @@
     <Compile Include="FilterOnlinerTests.cs" />
     <Compile Include="LoggerClass.cs" />
     <Compile Include="OrderOnlinerTests.cs" />
+    <Compile Include="OrderPopularAndNewTest.cs" />
     <Compile Include="PageObject\CatalogPage.cs" />
     <Compile Include="PageObject\LoginPage.cs" />
     <Compile Include="OnlinerTestsClass.cs" />
