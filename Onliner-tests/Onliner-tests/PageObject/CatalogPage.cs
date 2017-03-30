@@ -34,6 +34,8 @@ namespace Onliner_tests.PageObject
         public By LoadingProduct { get; set; } = By.CssSelector(".schema-products");
         public By LoadingProductProcessing { get; set; } = By.CssSelector(".schema-products.schema-products_processing");
         public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");
+        public By OrderPopular { get; set; } = By.CssSelector(".schema-order__item:nth-child(1)");
+
         public By OrderPriceASC { get; set; } = By.CssSelector(".schema-order__item:nth-child(2)");
         public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
         public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
@@ -113,8 +115,21 @@ namespace Onliner_tests.PageObject
             _driver.Click(OrderNew);
             //_driver.WaitElement(SchemaFilterProcessing);
             //_driver.WaitElement(LoadingProductProcessing);
+            _driver.WaitElement(Filter);
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
             _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+        }
+
+        public void ClickOrderPopular()
+        {
+            _driver.WaitElement(Filter);
+            if (GetNumberCheckoutorder() != 1)
+            {
+                _driver.Click(ShowOrderLink); 
+                _driver.Click(OrderPopular);
+                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            }
         }
 
         public int[] GetAllStarsInThisPage()
@@ -162,7 +177,7 @@ namespace Onliner_tests.PageObject
             List<string> fullNameList = new List<string>(); ;
             foreach (var item in array)
             {
-                fullNameList.Add(item["full_name"].ToString());
+                fullNameList.Add(item["full_name"].ToString().Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " "));
             }
             return fullNameList;
         }
@@ -173,10 +188,24 @@ namespace Onliner_tests.PageObject
             List<string> fullNameList = new List<string>();
             foreach (IWebElement element in allElements)
             {
-                String fullname = element.GetAttribute("innerHTML");
+                String fullname = element.GetAttribute("innerHTML").Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " ");
                 fullNameList.Add(fullname);
             }
             return fullNameList;
+        }
+
+        private int GetNumberCheckoutorder()
+        {
+            int i = 0;
+            By locator;
+            bool flag = false;
+            for(i = 1; i<=5; i++)
+            {
+                locator = By.CssSelector($".schema-order__item:nth-child({i})");
+                flag = _driver.CheckClassForElement(locator, "schema-order__item_active");
+                if (flag) return i;
+            }
+            return i;
         }
 
     }

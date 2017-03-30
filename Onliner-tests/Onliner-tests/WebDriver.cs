@@ -173,6 +173,7 @@ namespace Onliner_tests
 
         public void WaitForElementIsVisible(IWebElement element, int timeout = 30)
         {
+            _log.Log($"Wait for Element is visible {element.TagName} ");
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.Until(d => element.Displayed);
         }
@@ -189,6 +190,19 @@ namespace Onliner_tests
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             wait.Until(d => !d.FindElement(by).GetAttribute("class").Contains(text));
+        }
+
+        public bool CheckClassForElement(By locator, string classCheck)
+        {
+            bool flag = false;
+            var element = FindElementWithWaiting(locator);
+            _log.Log($"Check class \"{classCheck}\" for locator {locator}");
+            if (element.GetAttribute("class").Contains(classCheck))
+            {
+                _log.Log($"Class \"{classCheck}\" is present for locator {locator}");
+                flag = true;
+            }
+            return flag;
         }
 
     }
