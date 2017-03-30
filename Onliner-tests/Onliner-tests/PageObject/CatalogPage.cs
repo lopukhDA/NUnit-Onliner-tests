@@ -83,41 +83,93 @@ namespace Onliner_tests.PageObject
         {
             _driver.WaitElement(Filter);
             _driver.Click(ShowOrderLink);
+            _driver.WaitElement(OrderPriceASC);
             _driver.Click(OrderPriceASC);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            _driver.WaitElementAll(PriceProducts);
+            try
+            {
+                _driver.WaitElement(SchemaFilterProcessing);
+                _driver.WaitElement(LoadingProductProcessing);
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            finally
+            {
+                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            }
         }
 
         public void ClickOrderPriceDESC()
         {
             _driver.WaitElement(Filter);
             _driver.Click(ShowOrderLink);
+            _driver.WaitElement(OrderPriceDESC);
             _driver.Click(OrderPriceDESC);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            _driver.WaitElementAll(PriceProducts);
+            try
+            {
+                _driver.WaitElement(SchemaFilterProcessing);
+                _driver.WaitElement(LoadingProductProcessing);
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            finally
+            {
+                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            }
         }
 
         public void ClickOrderRating()
         {
             _driver.WaitElement(Filter);
             _driver.Click(ShowOrderLink);
+            _driver.WaitElement(OrderRating);
             _driver.Click(OrderRating);
-            _driver.WaitElement(SchemaFilterProcessing);
-            _driver.WaitElement(LoadingProductProcessing);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            try
+            {
+                _driver.WaitElement(SchemaFilterProcessing);
+                _driver.WaitElement(LoadingProductProcessing);
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            finally
+            {
+                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            }
+            
         }
 
         public void ClickOrderNew()
         {
             _driver.WaitElement(Filter);
             _driver.Click(ShowOrderLink);
+            _driver.WaitElement(OrderNew);
             _driver.Click(OrderNew);
-            //_driver.WaitElement(SchemaFilterProcessing);
-            //_driver.WaitElement(LoadingProductProcessing);
-            _driver.WaitElement(Filter);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            try
+            {
+                _driver.WaitElement(SchemaFilterProcessing);
+                _driver.WaitElement(LoadingProductProcessing);
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            finally
+            {
+                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            }
         }
 
         public void ClickOrderPopular()
@@ -125,10 +177,24 @@ namespace Onliner_tests.PageObject
             _driver.WaitElement(Filter);
             if (GetNumberCheckoutorder() != 1)
             {
-                _driver.Click(ShowOrderLink); 
+                _driver.Click(ShowOrderLink);
+                _driver.WaitElement(OrderPopular);
                 _driver.Click(OrderPopular);
-                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+                try
+                {
+                    _driver.WaitElement(SchemaFilterProcessing);
+                    _driver.WaitElement(LoadingProductProcessing);
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+                finally
+                {
+                    _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+                    _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+                }
             }
         }
 

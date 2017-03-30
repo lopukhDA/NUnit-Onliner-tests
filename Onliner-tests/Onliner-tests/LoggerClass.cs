@@ -18,13 +18,11 @@ namespace Onliner_tests
         }
 
         private static object _lock = new object();
-        private static int _countReport = 0;
 
         public void OneSetUp()
         {
             lock (_lock)
             {
-                _countReport++;
                 string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
                 string actualPath = path.Substring(0, path.LastIndexOf("bin"));
                 string projectPath = new Uri(actualPath).LocalPath;

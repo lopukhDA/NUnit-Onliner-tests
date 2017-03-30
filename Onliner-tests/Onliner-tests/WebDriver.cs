@@ -106,7 +106,7 @@ namespace Onliner_tests
         {
             _log.Log($"Navigating is {url}");
             _driver.Navigate().GoToUrl(url);
-            _driver.Manage().Window.Maximize();
+            //_driver.Manage().Window.Maximize();
         }
 
         public void Click(IWebElement element)
