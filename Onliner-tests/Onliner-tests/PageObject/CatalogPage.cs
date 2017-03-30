@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
+using System.Net;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Onliner_tests.PageObject
 {
@@ -31,10 +36,12 @@ namespace Onliner_tests.PageObject
         public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");
         public By OrderPriceASC { get; set; } = By.CssSelector(".schema-order__item:nth-child(2)");
         public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
+        public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
         public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
         public By RatingStar { get; set; } = By.CssSelector(".rating");
         public By SchemaFilter { get; set; } = By.CssSelector(".schema-filter-button__state_initial");
         public By SchemaFilterProcessing { get; set; } = By.CssSelector(".schema-products_processing");
+        public By FullNameProducts { get; set; } = By.XPath("//span[ contains(@data-bind,'product.extended_name')]");
 
         public void InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(double minPrise, double maxPrise)
         {
@@ -95,15 +102,19 @@ namespace Onliner_tests.PageObject
             _driver.Click(OrderRating);
             _driver.WaitElement(SchemaFilterProcessing);
             _driver.WaitElement(LoadingProductProcessing);
-
             _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-            //_driver.WaitAllElNEW(RatingStar);
             _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+        }
 
-            //Thread.Sleep(2000);
-            
-            //schema-filter-button__state schema-filter-button__state_initial schema-filter-button__state_disabled schema-filter-button__state_animated
-            //schema-filter-button__state schema-filter-button__state_initial schema-filter-button__state_disabled
+        public void ClickOrderNew()
+        {
+            _driver.WaitElement(Filter);
+            _driver.Click(ShowOrderLink);
+            _driver.Click(OrderNew);
+            //_driver.WaitElement(SchemaFilterProcessing);
+            //_driver.WaitElement(LoadingProductProcessing);
+            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+            _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
         }
 
         public int[] GetAllStarsInThisPage()
@@ -130,6 +141,42 @@ namespace Onliner_tests.PageObject
                 allPriceText[i++] = Convert.ToDouble(price);
             }
             return allPriceText;
+        }
+
+        public List<string> GetListJSONfullName(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.Host = "catalog.api.onliner.by";
+            request.Accept = "application/json, text/javascript, */*; q=0.01";
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+            StringBuilder output = new StringBuilder();
+            output.Append(reader.ReadToEnd());
+            reader.Close();
+            response.Close();
+            var json = JObject.Parse(output.ToString());
+            var array = json["products"];
+            string[] fullNameArray = new string[5];
+            List<string> fullNameList = new List<string>(); ;
+            foreach (var item in array)
+            {
+                fullNameList.Add(item["full_name"].ToString());
+            }
+            return fullNameList;
+        }
+
+        public List<string> GetListPagefullName()
+        {
+            IList<IWebElement> allElements = _driver.FindAllElements(FullNameProducts);
+            List<string> fullNameList = new List<string>();
+            foreach (IWebElement element in allElements)
+            {
+                String fullname = element.GetAttribute("innerHTML");
+                fullNameList.Add(fullname);
+            }
+            return fullNameList;
         }
 
     }
