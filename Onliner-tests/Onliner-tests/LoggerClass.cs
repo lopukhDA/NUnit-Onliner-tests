@@ -3,6 +3,7 @@ using NUnit.Framework.Interfaces;
 using RelevantCodes.ExtentReports;
 using System;
 using System.Configuration;
+using System.IO;
 
 namespace Onliner_tests
 {
@@ -27,6 +28,8 @@ namespace Onliner_tests
                 string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
                 string actualPath = path.Substring(0, path.LastIndexOf("bin"));
                 string projectPath = new Uri(actualPath).LocalPath;
+                Directory.CreateDirectory(projectPath + "Reports");
+
                 string reportPath = projectPath + "Reports\\Report" + TestContext.CurrentContext.Test.FullName + ".html";
 
                 _extent = new ExtentReports(reportPath, true);
@@ -35,7 +38,7 @@ namespace Onliner_tests
                     .AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"))
                     .AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"))
                     .AddSystemInfo("OSVersion", Environment.OSVersion.VersionString);
-                if(ConfigurationManager.AppSettings.Get("Grid") == "true")
+                if (ConfigurationManager.AppSettings.Get("Grid") == "true")
                 {
                     _extent.AddSystemInfo("localhost", "http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub");
                     _extent.AddSystemInfo("Grid node PlatformType", ConfigurationManager.AppSettings.Get("PlatformType"));
