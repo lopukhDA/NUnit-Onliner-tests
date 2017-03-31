@@ -13,11 +13,11 @@ namespace Onliner_tests
         public void SuccessLogin(string login, string pass)
         {
             log.StartTest($"SuccessLogin({login}, {pass})");
-            var loginPage = new PageObject.LoginPage(_webDriver, log);
+            var loginPage = new PageObject.LoginPage(webDriver, log);
             loginPage.Open();
             loginPage.Login(login, pass);
-            var username = _webDriver.WaitElement(loginPage.Username);
-            Assert.AreEqual("Dzmitry_Lopukh_test", _webDriver.GetText(username), "The page's username is different than expected");
+            var username = webDriver.WaitElement(loginPage.Username);
+            Assert.AreEqual("Dzmitry_Lopukh_test", webDriver.GetText(username), "The page's username is different than expected");
             log.Log(LogStatus.Pass, "Successful login user");
         }
 

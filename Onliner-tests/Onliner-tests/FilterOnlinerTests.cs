@@ -13,7 +13,7 @@ namespace Onliner_tests
         public void SuccessfulFilterForMaxPrice(double max)
         {
             log.StartTest($"SuccessfulFilterForMaxPrice({max})");
-            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            var catalogPage = new PageObject.CatalogPage(webDriver, log);
             catalogPage.Open();
             double maxPrice = max;
             catalogPage.InputFilterOnlyMaxPriceAndWaitComplitePrice(maxPrice);
@@ -34,7 +34,7 @@ namespace Onliner_tests
         public void SuccessfulFilterForMinPrice([Random(300, 800, 1)] double m)
         {
             log.StartTest($"SuccessfulFilterForMinPrice({m})");
-            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            var catalogPage = new PageObject.CatalogPage(webDriver, log);
             catalogPage.Open();
             double minPrice = m;
             catalogPage.InputFilterOnlyMinPriceAndWaitComplitePrice(minPrice);
@@ -56,7 +56,7 @@ namespace Onliner_tests
         public void SuccessfulFilterForMaxAndMinPrice(double min, double max)
         {
             log.StartTest($"SuccessfulFilterForMaxAndMinPrice({min}, {max})");
-            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            var catalogPage = new PageObject.CatalogPage(webDriver, log);
             catalogPage.Open();
             double minPrice = min;
             double maxPrice = max;

@@ -15,11 +15,12 @@ namespace Onliner_tests
         private IWebDriver _driver;
         private IWait<IWebDriver> _wait;
         private LoggerClass _log;
+        private const int _waitTimeout = 15;
 
         public WebDriver(LoggerClass log)
         {
             _driver = new ChromeDriver();
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(_waitTimeout));
             _log = log;
         }
 
@@ -91,7 +92,7 @@ namespace Onliner_tests
                 }
             }
 
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(_waitTimeout));
             _log = log;
         }
 
@@ -171,21 +172,21 @@ namespace Onliner_tests
 
         public IWebDriver GetNativeDriver() => _driver;
 
-        public void WaitForElementIsVisible(IWebElement element, int timeout = 30)
+        public void WaitForElementIsVisible(IWebElement element, int timeout = _waitTimeout)
         {
             _log.Log($"Wait for Element is visible {element.TagName} ");
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.Until(d => element.Displayed);
         }
 
-        public IWebElement FindElementWithWaiting(By by, int timeout = 30)
+        public IWebElement FindElementWithWaiting(By by, int timeout = _waitTimeout)
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             return wait.Until(d => d.FindElement(by));
         }
 
-        public void WaitWhileElementClassContainsText(By by, string text, int timeout = 30)
+        public void WaitWhileElementClassContainsText(By by, string text, int timeout = _waitTimeout)
         {
             IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));

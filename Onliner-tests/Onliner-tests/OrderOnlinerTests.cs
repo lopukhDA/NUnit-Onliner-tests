@@ -13,7 +13,7 @@ namespace Onliner_tests
         public void SuccessfulOrderPriceASC()
         {
             log.StartTest("SuccessfulOrderPriceASC");
-            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            var catalogPage = new PageObject.CatalogPage(webDriver, log);
             catalogPage.Open();
             catalogPage.ClickOrderPriceASC();
             double[] price = catalogPage.GetAllPriceInThisPage();
@@ -27,14 +27,14 @@ namespace Onliner_tests
         public void SuccessfulOrderPriceDESC()
         {
             log.StartTest("SuccessfulOrderPriceDESC");
-            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            var catalogPage = new PageObject.CatalogPage(webDriver, log);
             catalogPage.Open();
             catalogPage.ClickOrderPriceDESC();
             double[] price = catalogPage.GetAllPriceInThisPage();
             double[] priceSortDESC = catalogPage.GetAllPriceInThisPage();
             Array.Sort(priceSortDESC);
             Array.Reverse(priceSortDESC);
-            
+
             Assert.AreEqual(price, priceSortDESC, "Error, wrong sorting of prices");
             log.Log(LogStatus.Pass, "The order price by DESC works correctly");
         }
@@ -43,12 +43,12 @@ namespace Onliner_tests
         public void SuccessfulOrderRating()
         {
             log.StartTest("SuccessfulOrderRating");
-            var catalogPage = new PageObject.CatalogPage(_webDriver, log);
+            var catalogPage = new PageObject.CatalogPage(webDriver, log);
             catalogPage.Open();
             catalogPage.ClickOrderRating();
             int[] stars1 = catalogPage.GetAllStarsInThisPage();
             int[] stars = catalogPage.GetAllStarsInThisPage();
-            for (int i=0; i<stars.Length - 1; i++)
+            for (int i = 0; i < stars.Length - 1; i++)
             {
                 if (stars[i] < stars[i + 1])
                 {
@@ -56,7 +56,7 @@ namespace Onliner_tests
                     break;
                 }
             }
-            
+
             log.Log(LogStatus.Pass, "The order rating  works correctly");
         }
     }

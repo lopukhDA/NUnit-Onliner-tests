@@ -6,7 +6,7 @@ namespace Onliner_tests
 {
     public class BaseTastClass
     {
-        protected WebDriver _webDriver;
+        protected WebDriver webDriver;
         protected static ExtentReports extent;
         protected static ExtentTest test;
 
@@ -27,14 +27,14 @@ namespace Onliner_tests
         [SetUp]
         public void Setup()
         {
-            _webDriver = new WebDriver(ConfigurationManager.AppSettings.Get("DriverType"), log);
+            webDriver = new WebDriver(ConfigurationManager.AppSettings.Get("DriverType"), log);
         }
 
         [TearDown]
         public void TearDown()
         {
             log.TearDown();
-            _webDriver.Quit();
+            webDriver.Quit();
         }
     }
 }

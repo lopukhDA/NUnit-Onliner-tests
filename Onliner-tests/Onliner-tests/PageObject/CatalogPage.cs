@@ -5,7 +5,6 @@ using System.Net;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace Onliner_tests.PageObject
 {
@@ -35,7 +34,6 @@ namespace Onliner_tests.PageObject
         public By LoadingProductProcessing { get; set; } = By.CssSelector(".schema-products.schema-products_processing");
         public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");
         public By OrderPopular { get; set; } = By.CssSelector(".schema-order__item:nth-child(1)");
-
         public By OrderPriceASC { get; set; } = By.CssSelector(".schema-order__item:nth-child(2)");
         public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
         public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
@@ -90,11 +88,7 @@ namespace Onliner_tests.PageObject
                 _driver.WaitElement(SchemaFilterProcessing);
                 _driver.WaitElement(LoadingProductProcessing);
             }
-            catch (Exception)
-            {
-
-                
-            }
+            catch (Exception) { }
             finally
             {
                 _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
@@ -113,11 +107,7 @@ namespace Onliner_tests.PageObject
                 _driver.WaitElement(SchemaFilterProcessing);
                 _driver.WaitElement(LoadingProductProcessing);
             }
-            catch (Exception)
-            {
-
-                
-            }
+            catch (Exception) { }
             finally
             {
                 _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
@@ -136,17 +126,13 @@ namespace Onliner_tests.PageObject
                 _driver.WaitElement(SchemaFilterProcessing);
                 _driver.WaitElement(LoadingProductProcessing);
             }
-            catch (Exception)
-            {
-
-                
-            }
+            catch (Exception) { }
             finally
             {
                 _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
                 _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
             }
-            
+
         }
 
         public void ClickOrderNew()
@@ -160,11 +146,7 @@ namespace Onliner_tests.PageObject
                 _driver.WaitElement(SchemaFilterProcessing);
                 _driver.WaitElement(LoadingProductProcessing);
             }
-            catch (Exception)
-            {
-
-                
-            }
+            catch (Exception) { }
             finally
             {
                 _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
@@ -185,11 +167,7 @@ namespace Onliner_tests.PageObject
                     _driver.WaitElement(SchemaFilterProcessing);
                     _driver.WaitElement(LoadingProductProcessing);
                 }
-                catch (Exception)
-                {
-
-                    
-                }
+                catch (Exception) { }
                 finally
                 {
                     _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
@@ -224,7 +202,7 @@ namespace Onliner_tests.PageObject
             return allPriceText;
         }
 
-        public List<string> GetListJSONfullName(string url)
+        public List<string> GetListJsonFullName(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -265,7 +243,7 @@ namespace Onliner_tests.PageObject
             int i = 0;
             By locator;
             bool flag = false;
-            for(i = 1; i<=5; i++)
+            for (i = 1; i <= 5; i++)
             {
                 locator = By.CssSelector($".schema-order__item:nth-child({i})");
                 flag = _driver.CheckClassForElement(locator, "schema-order__item_active");

@@ -27,9 +27,7 @@ namespace Onliner_tests
                 string actualPath = path.Substring(0, path.LastIndexOf("bin"));
                 string projectPath = new Uri(actualPath).LocalPath;
                 Directory.CreateDirectory(projectPath + "Reports");
-
                 string reportPath = projectPath + "Reports\\Report" + TestContext.CurrentContext.Test.FullName + ".html";
-
                 _extent = new ExtentReports(reportPath, true);
                 _extent
                     .AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"))
@@ -56,7 +54,6 @@ namespace Onliner_tests
             var status = TestContext.CurrentContext.Result.Outcome.Status;
             var stackTrace = "<pre>" + TestContext.CurrentContext.Result.StackTrace + "</pre>";
             var errorMessage = TestContext.CurrentContext.Result.Message;
-
             if (status == TestStatus.Failed)
             {
                 _test.Log(LogStatus.Fail, stackTrace + errorMessage);
