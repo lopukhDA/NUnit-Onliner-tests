@@ -53,11 +53,12 @@ namespace Onliner_tests
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
             var stackTrace = "<pre>" + TestContext.CurrentContext.Result.StackTrace + "</pre>";
-            var errorMessage = TestContext.CurrentContext.Result.Message;
+            var message = TestContext.CurrentContext.Result.Message;
             if (status == TestStatus.Failed)
             {
-                _test.Log(LogStatus.Fail, stackTrace + errorMessage);
+                _test.Log(LogStatus.Fail, stackTrace + message);
             }
+            
             _extent.EndTest(_test);
             _test.Log(LogStatus.Info, "EndTest() method will stop capturing information about the test log");
         }

@@ -1,21 +1,34 @@
 ﻿using NUnit.Framework;
+using Onliner_tests.PageObject.OrderPageObj;
 using RelevantCodes.ExtentReports;
+using System;
 using System.Collections.Generic;
 
 
-namespace Onliner_tests
+namespace Onliner_tests.Tests
 {
     [TestFixture]
     [Parallelizable]
-    class OrderPopularAndNewTest : BaseTastClass
+    class OrderPopularAndNewNotebookOnlinerTest : BaseTastClass
     {
+        private string _url = "https://catalog.onliner.by/notebook";
+
         [Test]
-        public void SuccessfulOrderNew()
+        public void SuccessfulNotebookOrderNew()
         {
-            log.StartTest("SuccessfulOrderNew");
             var catalogPage = new PageObject.CatalogPage(webDriver, log);
-            catalogPage.Open();
-            catalogPage.ClickOrderNew();
+            var basicOrderPage = new BasicOrderPage(webDriver, log);
+            catalogPage.Open(_url);
+            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.New);
+            try
+            {
+                catalogPage.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                catalogPage.ProcessingComplite();
+            }
             List<string> fullNameListJSON = catalogPage.GetListJsonFullName("https://catalog.api.onliner.by/search/notebook?group=0&order=date:desc");
             List<string> fullNameListPage = catalogPage.GetListPagefullName();
             Assert.AreEqual(fullNameListJSON, fullNameListPage, "JSON is different");
@@ -23,12 +36,21 @@ namespace Onliner_tests
         }
 
         [Test]
-        public void SuccessfulOrderPopular()
+        public void SuccessfulNotebookOrderPopular()
         {
-            log.StartTest("SuccessfulOrderPopular");
             var catalogPage = new PageObject.CatalogPage(webDriver, log);
-            catalogPage.Open();
-            catalogPage.ClickOrderPopular();
+            var basicOrderPage = new BasicOrderPage(webDriver, log);
+            catalogPage.Open(_url);
+            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.Popular);
+            try
+            {
+                catalogPage.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                catalogPage.ProcessingComplite();
+            }
             List<string> fullNameListJSON = catalogPage.GetListJsonFullName("https://catalog.api.onliner.by/search/notebook?group=1&order=rating:desc");
             List<string> fullNameListPage = catalogPage.GetListPagefullName();
             Assert.AreEqual(fullNameListJSON, fullNameListPage, "JSON is different");

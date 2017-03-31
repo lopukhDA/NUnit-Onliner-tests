@@ -2,7 +2,7 @@
 using RelevantCodes.ExtentReports;
 using System.Configuration;
 
-namespace Onliner_tests
+namespace Onliner_tests.Tests
 {
     public class BaseTastClass
     {
@@ -27,6 +27,7 @@ namespace Onliner_tests
         [SetUp]
         public void Setup()
         {
+            log.StartTest(TestContext.CurrentContext.Test.Name);
             webDriver = new WebDriver(ConfigurationManager.AppSettings.Get("DriverType"), log);
         }
 

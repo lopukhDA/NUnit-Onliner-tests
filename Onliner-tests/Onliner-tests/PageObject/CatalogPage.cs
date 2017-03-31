@@ -19,187 +19,30 @@ namespace Onliner_tests.PageObject
             _log = log;
         }
 
-        public void Open()
+        public void Open(string url)
         {
-            _driver.Navigate("https://catalog.onliner.by/notebook");
+            _driver.Navigate(url);
         }
 
-        public By MinPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]");
-        public By MaxPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.to')]");
-        public By FilterPrice { get; set; } = By.CssSelector(".schema-tags__item span");
-        public By Filter { get; set; } = By.ClassName("schema-filter-button__state_disabled");
         public By PriceProducts { get; set; } = By.CssSelector(".schema-product__price-value.schema-product__price-value_primary span");
         public By ProductCatalog { get; set; } = By.Id("schema-products");
         public By LoadingProduct { get; set; } = By.CssSelector(".schema-products");
         public By LoadingProductProcessing { get; set; } = By.CssSelector(".schema-products.schema-products_processing");
-        public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");
-        public By OrderPopular { get; set; } = By.CssSelector(".schema-order__item:nth-child(1)");
-        public By OrderPriceASC { get; set; } = By.CssSelector(".schema-order__item:nth-child(2)");
-        public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
-        public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
-        public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
         public By RatingStar { get; set; } = By.CssSelector(".rating");
-        public By SchemaFilter { get; set; } = By.CssSelector(".schema-filter-button__state_initial");
-        public By SchemaFilterProcessing { get; set; } = By.CssSelector(".schema-products_processing");
         public By FullNameProducts { get; set; } = By.XPath("//span[ contains(@data-bind,'product.extended_name')]");
+        public By ProductDescription { get; set; } = By.XPath("//span[ contains(@data-bind,'html: product.description')]");
 
-        public void InputFilterMinPriceAndMaxPriceAndWaitComplitePrice(double minPrise, double maxPrise)
+        public string[] GetAllDescriptioninThePage()
         {
-            _driver.WaitElement(Filter);
-            _driver.SendKeys(MinPriceInput, minPrise.ToString());
-            _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
-            _driver.WaitElement(FilterPrice);
-        }
-
-        public void InputFilterOnlyMinPriceAndWaitComplitePrice(double minPrise)
-        {
-            _driver.WaitElement(Filter);
-            _driver.SendKeys(MinPriceInput, minPrise.ToString());
-            _driver.WaitElement(FilterPrice);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-
-        }
-
-        public void InputFilterOnlyMaxPriceAndWaitComplitePrice(double maxPrise)
-        {
-            _driver.WaitElement(Filter);
-            _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
-            _driver.WaitElement(FilterPrice);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-        }
-
-        public void InputFilterFullPriceAndWaitComplitePrice(double minPrise, double maxPrise)
-        {
-            _driver.WaitElement(Filter);
-            _driver.SendKeys(MinPriceInput, minPrise.ToString());
-            _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
-            _driver.WaitElement(FilterPrice);
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-        }
-
-        public void ClickOrderPriceASC()
-        {
-            _driver.WaitElement(Filter);
-            _driver.Click(ShowOrderLink);
-            _driver.WaitElement(OrderPriceASC);
-            _driver.Click(OrderPriceASC);
-            try
-            {
-                _driver.WaitElement(SchemaFilterProcessing);
-                _driver.WaitElement(LoadingProductProcessing);
-            }
-            catch (Exception) { }
-            finally
-            {
-                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
-            }
-        }
-
-        public void ClickOrderPriceDESC()
-        {
-            _driver.WaitElement(Filter);
-            _driver.Click(ShowOrderLink);
-            _driver.WaitElement(OrderPriceDESC);
-            _driver.Click(OrderPriceDESC);
-            try
-            {
-                _driver.WaitElement(SchemaFilterProcessing);
-                _driver.WaitElement(LoadingProductProcessing);
-            }
-            catch (Exception) { }
-            finally
-            {
-                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
-            }
-        }
-
-        public void ClickOrderRating()
-        {
-            _driver.WaitElement(Filter);
-            _driver.Click(ShowOrderLink);
-            _driver.WaitElement(OrderRating);
-            _driver.Click(OrderRating);
-            try
-            {
-                _driver.WaitElement(SchemaFilterProcessing);
-                _driver.WaitElement(LoadingProductProcessing);
-            }
-            catch (Exception) { }
-            finally
-            {
-                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
-            }
-
-        }
-
-        public void ClickOrderNew()
-        {
-            _driver.WaitElement(Filter);
-            _driver.Click(ShowOrderLink);
-            _driver.WaitElement(OrderNew);
-            _driver.Click(OrderNew);
-            try
-            {
-                _driver.WaitElement(SchemaFilterProcessing);
-                _driver.WaitElement(LoadingProductProcessing);
-            }
-            catch (Exception) { }
-            finally
-            {
-                _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-                _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
-            }
-        }
-
-        public void ClickOrderPopular()
-        {
-            _driver.WaitElement(Filter);
-            if (GetNumberCheckoutorder() != 1)
-            {
-                _driver.Click(ShowOrderLink);
-                _driver.WaitElement(OrderPopular);
-                _driver.Click(OrderPopular);
-                try
-                {
-                    _driver.WaitElement(SchemaFilterProcessing);
-                    _driver.WaitElement(LoadingProductProcessing);
-                }
-                catch (Exception) { }
-                finally
-                {
-                    _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
-                    _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
-                }
-            }
-        }
-
-        public int[] GetAllStarsInThisPage()
-        {
-            IList<IWebElement> allElements = _driver.FindAllElements(By.CssSelector(".rating"));
-            int[] allStarsText = new int[allElements.Count];
+            IList<IWebElement> allElements = _driver.FindAllElements(ProductDescription);
+            string[] allDescriptioninText = new string[allElements.Count];
             int i = 0;
             foreach (IWebElement element in allElements)
             {
-                String stars = element.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", "");
-                allStarsText[i++] = Convert.ToInt32(stars);
+                String Descriptionin = element.GetAttribute("innerHTML").Replace("&nbsp;", " ");
+                allDescriptioninText[i++] = Descriptionin.ToString();
             }
-            return allStarsText;
-        }
-
-        public double[] GetAllPriceInThisPage()
-        {
-            IList<IWebElement> allElements = _driver.FindAllElements(PriceProducts);
-            double[] allPriceText = new double[allElements.Count];
-            int i = 0;
-            foreach (IWebElement element in allElements)
-            {
-                String price = element.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", ".");
-                allPriceText[i++] = Convert.ToDouble(price);
-            }
-            return allPriceText;
+            return allDescriptioninText;
         }
 
         public List<string> GetListJsonFullName(string url)
@@ -221,9 +64,39 @@ namespace Onliner_tests.PageObject
             List<string> fullNameList = new List<string>(); ;
             foreach (var item in array)
             {
-                fullNameList.Add(item["full_name"].ToString().Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " "));
+                if (item["extended_name"].ToString() != null && item["extended_name"].ToString() != "")
+                {
+                    fullNameList.Add(item["extended_name"].ToString().Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " "));
+                }
+                else
+                {
+                    fullNameList.Add(item["full_name"].ToString().Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " "));
+                }
             }
             return fullNameList;
+        }
+
+        public void ProcessingComplite()
+        {
+            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+        }
+
+        public void WaitProcessing()
+        {
+            _driver.WaitElement(LoadingProductProcessing);
+        }
+
+        public int[] GetAllStarsInThisPage()
+        {
+            IList<IWebElement> allElements = _driver.FindAllElements(RatingStar);
+            int[] allStarsText = new int[allElements.Count];
+            int i = 0;
+            foreach (IWebElement element in allElements)
+            {
+                String stars = element.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", "");
+                allStarsText[i++] = Convert.ToInt32(stars);
+            }
+            return allStarsText;
         }
 
         public List<string> GetListPagefullName()
@@ -238,18 +111,17 @@ namespace Onliner_tests.PageObject
             return fullNameList;
         }
 
-        private int GetNumberCheckoutorder()
+        public double[] GetAllPriceInThisPage()
         {
+            IList<IWebElement> allElements = _driver.FindAllElements(PriceProducts);
+            double[] allPriceText = new double[allElements.Count];
             int i = 0;
-            By locator;
-            bool flag = false;
-            for (i = 1; i <= 5; i++)
+            foreach (IWebElement element in allElements)
             {
-                locator = By.CssSelector($".schema-order__item:nth-child({i})");
-                flag = _driver.CheckClassForElement(locator, "schema-order__item_active");
-                if (flag) return i;
+                String price = element.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", ".");
+                allPriceText[i++] = Convert.ToDouble(price);
             }
-            return i;
+            return allPriceText;
         }
 
     }

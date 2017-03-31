@@ -1,21 +1,34 @@
 ﻿using NUnit.Framework;
+using Onliner_tests.PageObject.FilterPageObj;
+using Onliner_tests.PageObject.OrderPageObj;
 using RelevantCodes.ExtentReports;
 using System;
 
 
-namespace Onliner_tests
+namespace Onliner_tests.Tests
 {
     [TestFixture]
     [Parallelizable]
-    class OrderOnlinerTests : BaseTastClass
+    class OrderNotebootOnlinerTests : BaseTastClass
     {
+        private string _url = "https://catalog.onliner.by/notebook";
+
         [Test]
-        public void SuccessfulOrderPriceASC()
+        public void SuccessfulNotebookOrderPriceASC()
         {
-            log.StartTest("SuccessfulOrderPriceASC");
             var catalogPage = new PageObject.CatalogPage(webDriver, log);
-            catalogPage.Open();
-            catalogPage.ClickOrderPriceASC();
+            var basicOrderPage = new BasicOrderPage(webDriver, log);
+            catalogPage.Open(_url);
+            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceASC);
+            try
+            {
+                catalogPage.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                catalogPage.ProcessingComplite();
+            }
             double[] price = catalogPage.GetAllPriceInThisPage();
             double[] priceSortASC = catalogPage.GetAllPriceInThisPage();
             Array.Sort(priceSortASC);
@@ -24,12 +37,21 @@ namespace Onliner_tests
         }
 
         [Test]
-        public void SuccessfulOrderPriceDESC()
+        public void SuccessfulNotebookOrderPriceDESC()
         {
-            log.StartTest("SuccessfulOrderPriceDESC");
             var catalogPage = new PageObject.CatalogPage(webDriver, log);
-            catalogPage.Open();
-            catalogPage.ClickOrderPriceDESC();
+            var basicOrderPage = new BasicOrderPage(webDriver, log);
+            catalogPage.Open(_url);
+            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceDESC);
+            try
+            {
+                catalogPage.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                catalogPage.ProcessingComplite();
+            }
             double[] price = catalogPage.GetAllPriceInThisPage();
             double[] priceSortDESC = catalogPage.GetAllPriceInThisPage();
             Array.Sort(priceSortDESC);
@@ -40,12 +62,21 @@ namespace Onliner_tests
         }
 
         [Test]
-        public void SuccessfulOrderRating()
+        public void SuccessfulNotebookOrderRating()
         {
-            log.StartTest("SuccessfulOrderRating");
             var catalogPage = new PageObject.CatalogPage(webDriver, log);
-            catalogPage.Open();
-            catalogPage.ClickOrderRating();
+            var basicOrderPage = new BasicOrderPage(webDriver, log);
+            catalogPage.Open(_url);
+            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.Rating);
+            try
+            {
+                catalogPage.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                catalogPage.ProcessingComplite();
+            }
             int[] stars1 = catalogPage.GetAllStarsInThisPage();
             int[] stars = catalogPage.GetAllStarsInThisPage();
             for (int i = 0; i < stars.Length - 1; i++)
@@ -59,5 +90,7 @@ namespace Onliner_tests
 
             log.Log(LogStatus.Pass, "The order rating  works correctly");
         }
+
+        
     }
 }

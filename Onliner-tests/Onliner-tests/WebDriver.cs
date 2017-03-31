@@ -15,7 +15,7 @@ namespace Onliner_tests
         private IWebDriver _driver;
         private IWait<IWebDriver> _wait;
         private LoggerClass _log;
-        private const int _waitTimeout = 15;
+        private const int _waitTimeout = 20;
 
         public WebDriver(LoggerClass log)
         {
