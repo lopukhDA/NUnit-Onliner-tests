@@ -5,12 +5,10 @@ namespace Onliner_tests.PageObject
     public class LoginPage
     {
         private WebDriver _driver;
-        private LoggerClass _log;
 
-        public LoginPage(WebDriver driver, LoggerClass log)
+        public LoginPage(WebDriver driver)
         {
             _driver = driver;
-            _log = log;
         }
 
         public void Open()

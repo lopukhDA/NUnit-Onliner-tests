@@ -12,15 +12,17 @@ namespace Onliner_tests
 {
     public class WebDriver
     {
-        private IWebDriver _driver;
+        public IWebDriver Driver { get; }
         private IWait<IWebDriver> _wait;
         private LoggerClass _log;
         private const int _waitTimeout = 20;
 
+        //public IWebDriver Driver { get; } 
+
         public WebDriver(LoggerClass log)
         {
-            _driver = new ChromeDriver();
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(_waitTimeout));
+            Driver = new ChromeDriver();
+            _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(_waitTimeout));
             _log = log;
         }
 
@@ -71,42 +73,42 @@ namespace Onliner_tests
                 }
 
                 capabilities.SetCapability("marionette", true);
-                _driver = new RemoteWebDriver(new Uri("http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub"), capabilities);
+                Driver = new RemoteWebDriver(new Uri("http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub"), capabilities);
             }
             else
             {
                 switch (driverType)
                 {
                     case "Firefox":
-                        _driver = new FirefoxDriver();
+                        Driver = new FirefoxDriver();
                         break;
                     case "IE":
-                        _driver = new InternetExplorerDriver();
+                        Driver = new InternetExplorerDriver();
                         break;
                     case "Chrome":
-                        _driver = new ChromeDriver();
+                        Driver = new ChromeDriver();
                         break;
                     default:
-                        _driver = new ChromeDriver();
+                        Driver = new ChromeDriver();
                         break;
                 }
             }
 
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(_waitTimeout));
+            _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(_waitTimeout));
             _log = log;
         }
 
         public void Quit()
         {
             _log.Log("Test Quit");
-            _driver.Manage().Cookies.DeleteAllCookies();
-            _driver.Quit();
+            Driver.Manage().Cookies.DeleteAllCookies();
+            Driver.Quit();
         }
 
         public void Navigate(string url)
         {
             _log.Log($"Navigating is {url}");
-            _driver.Navigate().GoToUrl(url);
+            Driver.Navigate().GoToUrl(url);
             //_driver.Manage().Window.Maximize();
         }
 
@@ -133,8 +135,8 @@ namespace Onliner_tests
 
         public string GetTitle()
         {
-            _log.Log($"Get Title page ({_driver.Title})");
-            return _driver.Title;
+            _log.Log($"Get Title page ({Driver.Title})");
+            return Driver.Title;
         }
 
         public string GetText(IWebElement element)
@@ -166,29 +168,29 @@ namespace Onliner_tests
         public IList<IWebElement> FindAllElements(By locator)
         {
             _log.Log($"Getting the list of elements by locator {locator} ");
-            IList<IWebElement> allElements = _driver.FindElements(locator);
+            IList<IWebElement> allElements = Driver.FindElements(locator);
             return allElements;
         }
 
-        public IWebDriver GetNativeDriver() => _driver;
+        public IWebDriver GetNativeDriver() => Driver;
 
         public void WaitForElementIsVisible(IWebElement element, int timeout = _waitTimeout)
         {
             _log.Log($"Wait for Element is visible {element.TagName} ");
-            IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+            IWait<IWebDriver> wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
             wait.Until(d => element.Displayed);
         }
 
         public IWebElement FindElementWithWaiting(By by, int timeout = _waitTimeout)
         {
-            IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+            IWait<IWebDriver> wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             return wait.Until(d => d.FindElement(by));
         }
 
         public void WaitWhileElementClassContainsText(By by, string text, int timeout = _waitTimeout)
         {
-            IWait<IWebDriver> wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+            IWait<IWebDriver> wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             wait.Until(d => !d.FindElement(by).GetAttribute("class").Contains(text));
         }
@@ -208,7 +210,7 @@ namespace Onliner_tests
 
         public void Scroll(string pix)
         {
-            IJavaScriptExecutor jse = (IJavaScriptExecutor)_driver;
+            IJavaScriptExecutor jse = (IJavaScriptExecutor)Driver;
             jse.ExecuteScript($"scroll(0, {pix});");
         }
 

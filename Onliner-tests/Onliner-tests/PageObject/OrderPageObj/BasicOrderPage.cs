@@ -9,13 +9,11 @@ namespace Onliner_tests.PageObject.OrderPageObj
 {
     class BasicOrderPage
     {
-        private LoggerClass _log;
         private WebDriver _driver;
 
-        public BasicOrderPage(WebDriver driver, LoggerClass log)
+        public BasicOrderPage(WebDriver driver)
         {
             _driver = driver;
-            _log = log;
         }
 
         public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");

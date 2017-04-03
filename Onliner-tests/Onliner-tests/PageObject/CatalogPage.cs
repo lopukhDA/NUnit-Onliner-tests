@@ -10,13 +10,11 @@ namespace Onliner_tests.PageObject
 {
     class CatalogPage
     {
-        private LoggerClass _log;
         private WebDriver _driver;
 
-        public CatalogPage(WebDriver driver, LoggerClass log)
+        public CatalogPage(WebDriver driver)
         {
             _driver = driver;
-            _log = log;
         }
 
         public void Open(string url)
@@ -86,15 +84,15 @@ namespace Onliner_tests.PageObject
             _driver.WaitElement(LoadingProductProcessing);
         }
 
-        public int[] GetAllStarsInThisPage()
+        public double[] GetAllStarsInThisPage()
         {
             IList<IWebElement> allElements = _driver.FindAllElements(RatingStar);
-            int[] allStarsText = new int[allElements.Count];
+            double[] allStarsText = new double[allElements.Count];
             int i = 0;
             foreach (IWebElement element in allElements)
             {
                 String stars = element.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", "");
-                allStarsText[i++] = Convert.ToInt32(stars);
+                allStarsText[i++] = Convert.ToDouble(stars);
             }
             return allStarsText;
         }

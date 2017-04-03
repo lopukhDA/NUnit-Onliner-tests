@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Configuration;
-using RelevantCodes.ExtentReports;
+using AventStack.ExtentReports;
 
 namespace Onliner_tests.Tests
 {
@@ -12,12 +12,12 @@ namespace Onliner_tests.Tests
         [TestCaseSource(typeof(DataForTests), "DataTestAccount")]
         public void SuccessLogin(string login, string pass)
         {
-            var loginPage = new PageObject.LoginPage(webDriver, log);
+            var loginPage = new PageObject.LoginPage(webDriver);
             loginPage.Open();
             loginPage.Login(login, pass);
             var username = webDriver.WaitElement(loginPage.Username);
             Assert.AreEqual("Dzmitry_Lopukh_test", webDriver.GetText(username), "The page's username is different than expected");
-            log.Log(LogStatus.Pass, "Successful login user");
+            log.Log(Status.Pass, "Successful login user");
         }
 
     }

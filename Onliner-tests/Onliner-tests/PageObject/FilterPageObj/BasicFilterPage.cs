@@ -9,13 +9,11 @@ namespace Onliner_tests.PageObject.FilterPageObj
 {
     public class BasicFilterPage
     {
-        private LoggerClass _log;
         private WebDriver _driver;
 
-        public BasicFilterPage(WebDriver driver, LoggerClass log)
+        public BasicFilterPage(WebDriver driver)
         {
-            _driver = driver;
-            _log = log;
+            _driver = driver;  
         }
 
         public By MinPriceInput { get; set; } = By.XPath("//input[contains(@class, 'schema-filter__number-input_price') and contains(@data-bind,'value: facet.value.from')]");

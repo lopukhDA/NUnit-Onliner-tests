@@ -10,14 +10,13 @@ namespace Onliner_tests.PageObject.FilterPageObj
 {
     class FilterNotebookPage : BasicFilterPage
     {
-        private LoggerClass _log;
         private WebDriver _driver;
 
-        public FilterNotebookPage(WebDriver driver, LoggerClass log) : base(driver, log)
+        public FilterNotebookPage(WebDriver driver) : base(driver)
         {
             _driver = driver;
-            _log = log;
         }
+
         public By CpuIntelCoreI7 { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=intelcorei7]+span");
         public By CpuAMDa10 { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=amda10]+span");
         public By CpuAMDfx { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=amdfx]+span");
