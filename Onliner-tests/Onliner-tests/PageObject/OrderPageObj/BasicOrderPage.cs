@@ -75,11 +75,6 @@ namespace Onliner_tests.PageObject.OrderPageObj
                 {OrderNew, OrderType.New},
                 {OrderRating, OrderType.Rating},
             };
-            //selectOrder.Add(OrderPopular, OrderType.Popular);
-            //selectOrder.Add(OrderPriceASC, OrderType.PriceASC);
-            //selectOrder.Add(OrderPriceDESC, OrderType.PriceDESC);
-            //selectOrder.Add(OrderNew, OrderType.New);
-            //selectOrder.Add(OrderRating, OrderType.Rating);
 
             foreach (var element in selectOrder)
             {

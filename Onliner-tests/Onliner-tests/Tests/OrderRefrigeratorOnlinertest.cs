@@ -3,19 +3,17 @@ using Onliner_tests.PageObject.OrderPageObj;
 using RelevantCodes.ExtentReports;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Onliner_tests.Tests
 {
     [TestFixture]
     [Parallelizable]
-    class OrderRefrigeratorOnlinertest : BaseTastClass
+    class OrderRefrigeratorOnlinerTest : BaseTastClass
     {
         private string _url = "https://catalog.onliner.by/refrigerator";
 
         [Test]
+        [Explicit]
         public void SuccessfulRefrigeratorOrderPriceASC()
         {
             var catalogPage = new PageObject.CatalogPage(webDriver, log);
@@ -136,5 +134,7 @@ namespace Onliner_tests.Tests
             Assert.AreEqual(fullNameListJSON, fullNameListPage, "JSON is different");
             log.Log(LogStatus.Pass, "The order new  works correctly");
         }
+
+
     }
 }

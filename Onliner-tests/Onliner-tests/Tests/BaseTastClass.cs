@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Onliner_tests.PageObject.FilterPageObj;
 using RelevantCodes.ExtentReports;
 using System.Configuration;
 
@@ -37,5 +38,26 @@ namespace Onliner_tests.Tests
             log.TearDown();
             webDriver.Quit();
         }
+  
     }
+
+    class DataForTests
+    {
+        static object[] DataTestMaxPrice = {
+            new object[] { 400 }
+        };
+
+        static object[] DataTestAccount = {
+            new object[] { ConfigurationManager.AppSettings.Get("Username"), ConfigurationManager.AppSettings.Get("Password") }
+        };
+
+        static object[] DataTestCPU = {
+            new object[] { FilterNotebookPage.CpuType.AMDa10, "AMD A10" },
+            new object[] { FilterNotebookPage.CpuType.AMDfx, "AMD FX" },
+            new object[] { FilterNotebookPage.CpuType.IntelAtom, "Intel Atom" },
+            new object[] { FilterNotebookPage.CpuType.IntelCoreI7, "Intel Core i7" },
+            new object[] { FilterNotebookPage.CpuType.Samsung, "Samsung" }
+        };
+    }
+
 }

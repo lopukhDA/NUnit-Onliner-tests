@@ -206,5 +206,17 @@ namespace Onliner_tests
             return flag;
         }
 
+        public void Scroll(string pix)
+        {
+            IJavaScriptExecutor jse = (IJavaScriptExecutor)_driver;
+            jse.ExecuteScript($"scroll(0, {pix});");
+        }
+
+        public IWebElement GetElement(By locator)
+        {
+            var el = FindElementWithWaiting(locator);
+            return el;
+        }
+
     }
 }

@@ -69,7 +69,8 @@
     <Compile Include="Tests\LoginOnlinerTests.cs" />
     <Compile Include="PageObject\OrderPageObj\BasicOrderPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\OrderRefrigeratorOnlinertest.cs" />
+    <Compile Include="Tests\OrderRefrigeratorOnlinerTest.cs" />
+    <Compile Include="Tests\OrderTVOnlinerTest.cs" />
     <Compile Include="WebDriver.cs" />
   </ItemGroup>
   <ItemGroup>

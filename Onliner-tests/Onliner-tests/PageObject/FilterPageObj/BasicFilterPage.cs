@@ -51,7 +51,7 @@ namespace Onliner_tests.PageObject.FilterPageObj
             InputFilterMaxPrice(maxPrise);
         }
 
-        private void WaitComplitePrice()
+        public void WaitComplitePrice()
         {
             _driver.WaitElement(FilterPrice);
         }

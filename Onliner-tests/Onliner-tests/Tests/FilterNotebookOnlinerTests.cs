@@ -81,22 +81,32 @@ namespace Onliner_tests.Tests
             log.Log(LogStatus.Pass, "The interval filter works correctly");
         }
 
-        [Test]
-        public void ProcessorFilterAMDa10Notebook()
+        //[Test]
+        [TestCaseSource(typeof(DataForTests), "DataTestCPU")]
+        public void ProcessorFilterAMDa10Notebook(FilterNotebookPage.CpuType type, string text)
         {
             var catalogPage = new CatalogPage(webDriver, log);
             var filterNotebookPage = new FilterNotebookPage(webDriver, log);
             catalogPage.Open(_url);
-            filterNotebookPage.SelectCPU(FilterNotebookPage.CpuType.AMDa10);
+            filterNotebookPage.SelectCPU(type);
+            try
+            {
+                catalogPage.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                catalogPage.ProcessingComplite();
+            }
             string[] descriptionAll = catalogPage.GetAllDescriptioninThePage();
             foreach (var item in descriptionAll)
             {
-                if(!item.Contains("AMD A10"))
+                if(!item.Contains(text))
                 {
-                    Assert.Fail("The processor 'AMD A10' filter not works correctly");
+                    Assert.Fail($"The processor '{text}' filter not works correctly");
                 }
             }
-
+            log.Log(LogStatus.Pass, $"The processor {text} filter works correctly");
         }
 
     }

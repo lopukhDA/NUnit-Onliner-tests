@@ -22,16 +22,5 @@ namespace Onliner_tests.Tests
 
     }
 
-    class DataForTests
-    {
-
-        static object[] DataTestMaxPrice = {
-            new object[] { 500 }
-        };
-
-        static object[] DataTestAccount = {
-            new object[] { ConfigurationManager.AppSettings.Get("Username"), ConfigurationManager.AppSettings.Get("Password") }
-        };
-
-    }
+    
 }
