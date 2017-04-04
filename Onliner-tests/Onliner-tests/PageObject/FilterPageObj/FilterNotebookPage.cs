@@ -1,10 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Onliner_tests.PageObject.FilterPageObj
 {
@@ -23,7 +17,7 @@ namespace Onliner_tests.PageObject.FilterPageObj
         public By CpuIntelAtom { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=intelatom]+span");
         public By CpuSamsung { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=samsung]+span");
 
-        public By ShowOtherCPU { get; set; } = By.CssSelector("#schema-filter > div:nth-child(1) > div:nth-child(12) > div.schema-filter__facet > div.schema-filter-control.schema-filter-control_more");
+        public By ShowOtherCPU { get; set; } = By.CssSelector("//span[contains(text(),'Процессор')]//..//..//div[contains(@data-bind, 'facet.togglePopover')]");
         public By FilterPopoverVisible { get; set; } = By.CssSelector(".schema-filter-popover.schema-filter-popover_visible");
 
         public enum CpuType
@@ -33,12 +27,11 @@ namespace Onliner_tests.PageObject.FilterPageObj
 
         public void SelectCPU(CpuType orderType)
         {
-            _driver.WaitElement(Filter);
+            _driver.WaitForElementIsVisible(Filter);
             var proc = _driver.GetElement(ShowOtherCPU);
             _driver.Scroll((proc.Location.Y).ToString());
-            //_driver.SendKeys(By.CssSelector("#schema-filter > div:nth-child(1) > div:nth-child(13) > div.schema-filter__facet > div > div:nth-child(1) > input"), "");
             _driver.Click(ShowOtherCPU);
-            _driver.WaitElement(FilterPopoverVisible);
+            _driver.WaitForElementIsVisible(FilterPopoverVisible);
             switch (orderType)
             {
                 case CpuType.IntelCoreI7:

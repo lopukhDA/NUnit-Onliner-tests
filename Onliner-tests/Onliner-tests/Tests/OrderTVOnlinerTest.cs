@@ -13,7 +13,7 @@ namespace Onliner_tests.Tests
         private string _url = "https://catalog.onliner.by/tv";
 
         [Test]
-        public void SuccessfulTVOrderPriceASC()
+        public void OrderPriceAscTVTest()
         {
             var catalogPage = new PageObject.CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
@@ -36,7 +36,7 @@ namespace Onliner_tests.Tests
         }
 
         [Test]
-        public void SuccessfulTVOrderPriceDESC()
+        public void OrderPriceDescTVTest()
         {
             var catalogPage = new PageObject.CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
@@ -61,7 +61,7 @@ namespace Onliner_tests.Tests
         }
 
         [Test]
-        public void SuccessfulTVOrderRating()
+        public void OrderRatingTVTest()
         {
             var catalogPage = new PageObject.CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
@@ -90,7 +90,7 @@ namespace Onliner_tests.Tests
         }
 
         [TestCaseSource(typeof(DataForTests), "DataTestOrderJsonForTV")]
-        public void SuccessfulTVOrderNew(BasicOrderPage.OrderType type, string url)
+        public void OrderOtherTVTest(BasicOrderPage.OrderType type, string url)
         {
             var catalogPage = new PageObject.CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);

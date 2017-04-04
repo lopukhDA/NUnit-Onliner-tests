@@ -17,8 +17,6 @@ namespace Onliner_tests
         private LoggerClass _log;
         private const int _waitTimeout = 20;
 
-        //public IWebDriver Driver { get; } 
-
         public WebDriver(LoggerClass log)
         {
             Driver = new ChromeDriver();
@@ -28,6 +26,7 @@ namespace Onliner_tests
 
         public WebDriver(string driverType, LoggerClass log)
         {
+            _log = log;
             if (ConfigurationManager.AppSettings.Get("Grid") == "true")
             {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -36,44 +35,55 @@ namespace Onliner_tests
                     case "Firefox":
                         capabilities = DesiredCapabilities.Firefox();
                         capabilities.SetCapability(CapabilityType.BrowserName, "firefox");
+                        _log.Log("Start Webdriver grid firefox");
                         break;
                     case "IE":
                         capabilities = DesiredCapabilities.InternetExplorer();
                         capabilities.SetCapability(CapabilityType.BrowserName, "internet explorer");
+                        _log.Log("Start Webdriver grid internet explorer");
                         break;
                     case "Chrome":
                         capabilities = DesiredCapabilities.Chrome();
                         capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
+                        _log.Log("Start Webdriver grid chrome");
                         break;
                     default:
                         capabilities = DesiredCapabilities.Chrome();
                         capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
+                        _log.Log("Start Webdriver grid default chrome");
                         break;
                 }
                 switch (ConfigurationManager.AppSettings.Get("PlatformType"))
                 {
                     case "Windows":
                         capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                        _log.Log("Platform grid Windows");
                         break;
                     case "Linux":
                         capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Linux));
+                        _log.Log("Platform grid Linux");
                         break;
                     case "Mac":
                         capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Mac));
+                        _log.Log("Platform grid Mac");
                         break;
                     case "Unix":
                         capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Unix));
+                        _log.Log("Platform grid Unix");
                         break;
                     case "XP":
                         capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.XP));
+                        _log.Log("Platform grid XP");
                         break;
                     default:
                         capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                        _log.Log("Platform grid default Windows");
                         break;
                 }
 
                 capabilities.SetCapability("marionette", true);
                 Driver = new RemoteWebDriver(new Uri("http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub"), capabilities);
+                _log.Log("Grid Server" + "http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub");
             }
             else
             {
@@ -81,21 +91,25 @@ namespace Onliner_tests
                 {
                     case "Firefox":
                         Driver = new FirefoxDriver();
+                        _log.Log("Start firefox webdriver");
                         break;
                     case "IE":
                         Driver = new InternetExplorerDriver();
+                        _log.Log("Start internet explorer webdriver");
                         break;
                     case "Chrome":
                         Driver = new ChromeDriver();
+                        _log.Log("Start Chrome webdriver");
                         break;
                     default:
                         Driver = new ChromeDriver();
+                        _log.Log("Start default Chrome webdriver");
                         break;
                 }
             }
 
             _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(_waitTimeout));
-            _log = log;
+            
         }
 
         public void Quit()
@@ -152,14 +166,14 @@ namespace Onliner_tests
             return text;
         }
 
-        public IWebElement WaitElement(By locator)
+        public IWebElement WaitForElementIsVisible(By locator)
         {
             _log.Log($"Waiting locator {locator} ");
             IWebElement element = _wait.Until(ExpectedConditions.ElementIsVisible(locator));
             return element;
         }
 
-        public void WaitElementAll(By locator)
+        public void VisibilityOfAllElementsLocatedBy(By locator)
         {
             _log.Log($"Waiting all elements by locator {locator} ");
             _wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(locator));
@@ -212,6 +226,7 @@ namespace Onliner_tests
         {
             IJavaScriptExecutor jse = (IJavaScriptExecutor)Driver;
             jse.ExecuteScript($"scroll(0, {pix});");
+            _log.Log($"Scrolling {pix}pixels");
         }
 
         public IWebElement GetElement(By locator)

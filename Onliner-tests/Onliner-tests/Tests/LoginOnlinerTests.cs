@@ -15,7 +15,7 @@ namespace Onliner_tests.Tests
             var loginPage = new PageObject.LoginPage(webDriver);
             loginPage.Open();
             loginPage.Login(login, pass);
-            var username = webDriver.WaitElement(loginPage.Username);
+            var username = webDriver.WaitForElementIsVisible(loginPage.Username);
             Assert.AreEqual("Dzmitry_Lopukh_test", webDriver.GetText(username), "The page's username is different than expected");
             log.Log(Status.Pass, "Successful login user");
         }

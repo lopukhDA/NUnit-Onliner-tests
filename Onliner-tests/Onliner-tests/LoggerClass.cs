@@ -1,5 +1,6 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
+using AventStack.ExtentReports.Reporter.Configuration;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
@@ -21,14 +22,13 @@ namespace Onliner_tests
 
         static LoggerClass()
         {
-
-
-
-
-            Directory.CreateDirectory(projectPath + "Reports\\" + date);
             string reportPath = projectPath + "Reports\\" + date + "\\Report.html";
             _extent = new ExtentReports();
-            _extent.AttachReporter(new ExtentHtmlReporter(reportPath));
+            var htmlReporter = new ExtentHtmlReporter(reportPath);
+            htmlReporter.Configuration().ChartVisibilityOnOpen = false;
+            htmlReporter.Configuration().DocumentTitle = "Onliner tests report";
+            htmlReporter.Configuration().Theme = Theme.Dark;
+            _extent.AttachReporter(htmlReporter);
             _extent.AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"));
             _extent.AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"));
             _extent.AddSystemInfo("Autor", ConfigurationManager.AppSettings.Get("Autor"));
@@ -38,7 +38,6 @@ namespace Onliner_tests
                 _extent.AddSystemInfo("localhost", "http://" + ConfigurationManager.AppSettings.Get("localhost") + ":" + ConfigurationManager.AppSettings.Get("port") + "/wd/hub");
                 _extent.AddSystemInfo("Grid node PlatformType", ConfigurationManager.AppSettings.Get("PlatformType"));
             }
-            //_extent.LoadConfig(projectPath + "extent-config.xml");
         }
 
         public void OneTearDown()
@@ -48,18 +47,17 @@ namespace Onliner_tests
 
         public void TearDown(IWebDriver driver)
         {
+            Directory.CreateDirectory(projectPath + "Reports\\" + date);
             var status = TestContext.CurrentContext.Result.Outcome.Status;
             var stackTrace = "<pre>" + TestContext.CurrentContext.Result.StackTrace + "</pre>";
             var message = TestContext.CurrentContext.Result.Message;
             if (status == TestStatus.Failed)
             {
-                string imageFilePath = projectPath + $"Reports\\" + date + "\\scrin{i++}.png";
+                string imageFilePath = projectPath + "Reports\\" + date + $"\\scrin{i++}.png";
                 Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
                 ss.SaveAsFile(imageFilePath, ScreenshotImageFormat.Png);
                 _test.Fail(stackTrace + message, MediaEntityBuilder.CreateScreenCaptureFromPath(imageFilePath).Build());
-
             }
-
             _test.Log(Status.Info, "EndTest() method will stop capturing information about the test log");
         }
 
@@ -76,6 +74,31 @@ namespace Onliner_tests
         public void Log(string text)
         {
             _test.Log(Status.Info, text);
+        }
+
+        public void Pass(string text)
+        {
+            _test.Pass(text);
+        }
+
+        public void Error(string text)
+        {
+            _test.Error(text);
+        }
+
+        public void Skip(string text)
+        {
+            _test.Skip(text);
+        }
+
+        public void Fail(string text)
+        {
+            _test.Fail(text);
+        }
+
+        public void Fatal(string text)
+        {
+            _test.Fatal(text);
         }
 
         public void ErrorLog(string text)

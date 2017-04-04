@@ -1,9 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Onliner_tests.PageObject.OrderPageObj
 {
@@ -23,6 +19,7 @@ namespace Onliner_tests.PageObject.OrderPageObj
         public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
         public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
         public By OrderOpen { get; set; } = By.CssSelector(".schema-order_opened");
+        public By OnlyNewProduct { get; set; } = By.CssSelector("input[name=ko_unique_2] + span");
 
         
         public enum OrderType
@@ -32,30 +29,31 @@ namespace Onliner_tests.PageObject.OrderPageObj
 
         public void ClickOrder(OrderType orderType)
         {
+            _driver.Click(OnlyNewProduct);
             if (GetOrdertypeCheckout() != orderType)
             {
-                _driver.Click(ShowOrderLink);
-                _driver.WaitElement(OrderOpen);
+                //_driver.Click(ShowOrderLink);
+                _driver.WaitForElementIsVisible(OrderOpen);
                 switch (orderType)
                 {
                     case OrderType.PriceASC:
-                        _driver.WaitElement(OrderPriceASC);
+                        _driver.WaitForElementIsVisible(OrderPriceASC);
                         _driver.Click(OrderPriceASC);
                         break;
                     case OrderType.PriceDESC:
-                        _driver.WaitElement(OrderPriceDESC);
+                        _driver.WaitForElementIsVisible(OrderPriceDESC);
                         _driver.Click(OrderPriceDESC);
                         break;
                     case OrderType.New:
-                        _driver.WaitElement(OrderNew);
+                        _driver.WaitForElementIsVisible(OrderNew);
                         _driver.Click(OrderNew);
                         break;
                     case OrderType.Popular:
-                        _driver.WaitElement(OrderPopular);
+                        _driver.WaitForElementIsVisible(OrderPopular);
                         _driver.Click(OrderPopular);
                         break;
                     case OrderType.Rating:
-                        _driver.WaitElement(OrderRating);
+                        _driver.WaitForElementIsVisible(OrderRating);
                         _driver.Click(OrderRating);
                         break;
                 }

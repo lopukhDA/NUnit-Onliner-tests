@@ -81,7 +81,7 @@ namespace Onliner_tests.PageObject
 
         public void WaitProcessing()
         {
-            _driver.WaitElement(LoadingProductProcessing);
+            _driver.WaitForElementIsVisible(LoadingProductProcessing);
         }
 
         public double[] GetAllStarsInThisPage()

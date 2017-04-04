@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Onliner_tests.PageObject.FilterPageObj
 {
@@ -25,14 +20,14 @@ namespace Onliner_tests.PageObject.FilterPageObj
 
         public void InputFilterMinPrice(double minPrise)
         {
-            _driver.WaitElement(Filter);
+            _driver.WaitForElementIsVisible(Filter);
             _driver.SendKeys(MinPriceInput, minPrise.ToString());;
             WaitComplitePrice();
         }
 
         public void InputFilterMaxPrice(double maxPrise)
         {
-            _driver.WaitElement(Filter);
+            _driver.WaitForElementIsVisible(Filter);
             _driver.SendKeys(MaxPriceInput, maxPrise.ToString());
             WaitComplitePrice();
         }
@@ -51,7 +46,7 @@ namespace Onliner_tests.PageObject.FilterPageObj
 
         public void WaitComplitePrice()
         {
-            _driver.WaitElement(FilterPrice);
+            _driver.WaitForElementIsVisible(FilterPrice);
         }
 
         public void ProcessingComplite()
@@ -61,7 +56,7 @@ namespace Onliner_tests.PageObject.FilterPageObj
 
         public void WaitProcessing()
         {
-            _driver.WaitElement(SchemaFilterProcessing);
+            _driver.WaitForElementIsVisible(SchemaFilterProcessing);
         }
     }
 }
