@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Onliner_tests.PageObject.OrderPageObj
 {
-    class BasicOrderPage
+    class BasicOrderComponent
     {
         private WebDriver _driver;
 
-        public BasicOrderPage(WebDriver driver)
+        public BasicOrderComponent(WebDriver driver)
         {
             _driver = driver;
         }

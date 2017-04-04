@@ -15,13 +15,13 @@ namespace Onliner_tests.Tests
         [TestCaseSource(typeof(DataForTests), "DataTestMaxPrice")]
         public void SuccessfulFilterNotebookForMaxPrice(double max)
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var filterNotebookPage = new FilterNotebookPage(webDriver);
-            catalogPage.Open(_url);
+            var resultComponent = new ResultComponent(webDriver);
+            var filterNotebookComponent = new FilterNotebookComponent(webDriver);
+            resultComponent.Open(_url);
             double maxPrice = max;
-            filterNotebookPage.InputFilterMaxPrice(maxPrice);
-            catalogPage.ProcessingComplite();
-            double[] price = catalogPage.GetAllPriceInThisPage();
+            filterNotebookComponent.InputFilterMaxPrice(maxPrice);
+            resultComponent.ProcessingComplite();
+            double[] price = resultComponent.GetAllPriceInThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -37,13 +37,13 @@ namespace Onliner_tests.Tests
         [Test]
         public void SuccessfulFilterNotebookForMinPrice([Random(300, 800, 1)] double m)
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var basicFilterPage = new BasicFilterPage(webDriver);
-            catalogPage.Open(_url);
+            var resultComponent = new ResultComponent(webDriver);
+            var filterNotebookComponent = new FilterNotebookComponent(webDriver);
+            resultComponent.Open(_url);
             double minPrice = m;
-            basicFilterPage.InputFilterMinPrice(minPrice);
-            catalogPage.ProcessingComplite();
-            double[] price = catalogPage.GetAllPriceInThisPage();
+            filterNotebookComponent.InputFilterMinPrice(minPrice);
+            resultComponent.ProcessingComplite();
+            double[] price = resultComponent.GetAllPriceInThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -60,14 +60,14 @@ namespace Onliner_tests.Tests
         [TestCase(300, 500)]
         public void SuccessfulFilterNotebookForMaxAndMinPrice(double min, double max)
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var basicFilterPage = new BasicFilterPage(webDriver);
-            catalogPage.Open(_url);
+            var resultComponent = new ResultComponent(webDriver);
+            var filterNotebookComponent = new FilterNotebookComponent(webDriver);
+            resultComponent.Open(_url);
             double minPrice = min;
             double maxPrice = max;
-            basicFilterPage.InputFilterFullPrice(minPrice, maxPrice);
-            catalogPage.ProcessingComplite();
-            double[] price = catalogPage.GetAllPriceInThisPage();
+            filterNotebookComponent.InputFilterFullPrice(minPrice, maxPrice);
+            resultComponent.ProcessingComplite();
+            double[] price = resultComponent.GetAllPriceInThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -81,22 +81,22 @@ namespace Onliner_tests.Tests
         }
 
         [TestCaseSource(typeof(DataForTests), "DataTestCPU")]
-        public void ProcessorFilterAMDa10Notebook(FilterNotebookPage.CpuType type, string text)
+        public void ProcessorFilterAMDa10Notebook(FilterNotebookComponent.CpuType type, string text)
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var filterNotebookPage = new FilterNotebookPage(webDriver);
-            catalogPage.Open(_url);
-            filterNotebookPage.SelectCPU(type);
+            var resultComponent = new ResultComponent(webDriver);
+            var filterNotebookComponent = new FilterNotebookComponent(webDriver);
+            resultComponent.Open(_url);
+            filterNotebookComponent.SelectCPU(type);
             try
             {
-                catalogPage.WaitProcessing();
+                resultComponent.WaitProcessing();
             }
             catch (Exception) { }
             finally
             {
-                catalogPage.ProcessingComplite();
+                resultComponent.ProcessingComplite();
             }
-            string[] descriptionAll = catalogPage.GetAllDescriptioninThePage();
+            string[] descriptionAll = resultComponent.GetAllDescriptioninThePage();
             foreach (var item in descriptionAll)
             {
                 if (!item.Contains(text))

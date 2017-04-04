@@ -16,23 +16,23 @@ namespace Onliner_tests.Tests
         [Test]
         public void OrderPriceAscRefrigeratorTest()
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var basicOrderPage = new BasicOrderPage(webDriver);
-            catalogPage.Open(_url);
-            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
-            catalogPage.ProcessingComplite();
-            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceASC);
+            var resultComponent = new ResultComponent(webDriver);
+            var basicOrderComponent = new BasicOrderComponent(webDriver);
+            resultComponent.Open(_url);
+            basicOrderComponent.ClickProductType(BasicOrderComponent.ProductType.New);
+            resultComponent.ProcessingComplite();
+            basicOrderComponent.ClickOrder(BasicOrderComponent.OrderType.PriceASC);
             try
             {
-                catalogPage.WaitProcessing();
+                resultComponent.WaitProcessing();
             }
             catch (Exception) { }
             finally
             {
-                catalogPage.ProcessingComplite();
+                resultComponent.ProcessingComplite();
             }
-            double[] price = catalogPage.GetAllPriceInThisPage();
-            double[] priceSortASC = catalogPage.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] priceSortASC = resultComponent.GetAllPriceInThisPage();
             Array.Sort(priceSortASC);
             Assert.AreEqual(price, priceSortASC, "Error, wrong sorting of prices");
             log.Log(Status.Pass, "The order price by ASC works correctly");
@@ -41,23 +41,23 @@ namespace Onliner_tests.Tests
         [Test]
         public void OrderPriceDescRefrigeratorTest()
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var basicOrderPage = new BasicOrderPage(webDriver);
-            catalogPage.Open(_url);
-            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
-            catalogPage.ProcessingComplite();
-            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceDESC);
+            var resultComponent = new ResultComponent(webDriver);
+            var basicOrderComponent = new BasicOrderComponent(webDriver);
+            resultComponent.Open(_url);
+            basicOrderComponent.ClickProductType(BasicOrderComponent.ProductType.New);
+            resultComponent.ProcessingComplite();
+            basicOrderComponent.ClickOrder(BasicOrderComponent.OrderType.PriceDESC);
             try
             {
-                catalogPage.WaitProcessing();
+                resultComponent.WaitProcessing();
             }
             catch (Exception) { }
             finally
             {
-                catalogPage.ProcessingComplite();
+                resultComponent.ProcessingComplite();
             }
-            double[] price = catalogPage.GetAllPriceInThisPage();
-            double[] priceSortDESC = catalogPage.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] priceSortDESC = resultComponent.GetAllPriceInThisPage();
             Array.Sort(priceSortDESC);
             Array.Reverse(priceSortDESC);
 
@@ -68,22 +68,22 @@ namespace Onliner_tests.Tests
         [Test]
         public void OrderRaitingRefrigeratorTest()
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var basicOrderPage = new BasicOrderPage(webDriver);
-            catalogPage.Open(_url);
-            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
-            catalogPage.ProcessingComplite();
-            basicOrderPage.ClickOrder(BasicOrderPage.OrderType.Rating);
+            var resultComponent = new ResultComponent(webDriver);
+            var basicOrderComponent = new BasicOrderComponent(webDriver);
+            resultComponent.Open(_url);
+            basicOrderComponent.ClickProductType(BasicOrderComponent.ProductType.New);
+            resultComponent.ProcessingComplite();
+            basicOrderComponent.ClickOrder(BasicOrderComponent.OrderType.Rating);
             try
             {
-                catalogPage.WaitProcessing();
+                resultComponent.WaitProcessing();
             }
             catch (Exception) { }
             finally
             {
-                catalogPage.ProcessingComplite();
+                resultComponent.ProcessingComplite();
             }
-            double[] stars = catalogPage.GetAllStarsInThisPage();
+            double[] stars = resultComponent.GetAllStarsInThisPage();
             for (int i = 0; i < stars.Length - 1; i++)
             {
                 if (stars[i] < stars[i + 1])
@@ -97,25 +97,25 @@ namespace Onliner_tests.Tests
         }
 
         [TestCaseSource(typeof(DataForTests), "DataTestOrderJsonForRefrigerator")]
-        public void OrderOtherRefrigeratorTest(BasicOrderPage.OrderType type, string url)
+        public void OrderOtherRefrigeratorTest(BasicOrderComponent.OrderType type, string url)
         {
-            var catalogPage = new CatalogPage(webDriver);
-            var basicOrderPage = new BasicOrderPage(webDriver);
-            catalogPage.Open(_url);
-            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
-            catalogPage.ProcessingComplite();
-            basicOrderPage.ClickOrder(type);
+            var resultComponent = new ResultComponent(webDriver);
+            var basicOrderComponent = new BasicOrderComponent(webDriver);
+            resultComponent.Open(_url);
+            basicOrderComponent.ClickProductType(BasicOrderComponent.ProductType.New);
+            resultComponent.ProcessingComplite();
+            basicOrderComponent.ClickOrder(type);
             try
             {
-                catalogPage.WaitProcessing();
+                resultComponent.WaitProcessing();
             }
             catch (Exception) { }
             finally
             {
-                catalogPage.ProcessingComplite();
+                resultComponent.ProcessingComplite();
             }
-            List<string> fullNameListJSON = catalogPage.GetListJsonFullName(url);
-            List<string> fullNameListPage = catalogPage.GetListPagefullName();
+            List<string> fullNameListJSON = resultComponent.GetListJsonFullName(url);
+            List<string> fullNameListPage = resultComponent.GetListPagefullName();
             Assert.AreEqual(fullNameListJSON, fullNameListPage, "JSON is different");
             log.Log(Status.Pass, $"The order {type}  works correctly");
         }

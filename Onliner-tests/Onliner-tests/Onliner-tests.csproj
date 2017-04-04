@@ -54,16 +54,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataForTests.cs" />
-    <Compile Include="PageObject\FilterPageObj\FilterNotebookPage.cs" />
+    <Compile Include="PageObject\FilterPageObj\FilterNotebookComponent.cs" />
     <Compile Include="Tests\BaseTastClass.cs" />
     <Compile Include="Tests\FilterNotebookOnlinerTests.cs" />
     <Compile Include="LoggerClass.cs" />
     <Compile Include="Tests\OrderNotebootOnlinerTests.cs" />
-    <Compile Include="PageObject\CatalogPage.cs" />
-    <Compile Include="PageObject\FilterPageObj\BasicFilterPage.cs" />
+    <Compile Include="PageObject\ResultComponent.cs" />
+    <Compile Include="PageObject\FilterPageObj\BasicFilterComponent.cs" />
     <Compile Include="PageObject\LoginPage.cs" />
     <Compile Include="Tests\LoginOnlinerTests.cs" />
-    <Compile Include="PageObject\OrderPageObj\BasicOrderPage.cs" />
+    <Compile Include="PageObject\OrderPageObj\BasicOrderComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\OrderRefrigeratorOnlinerTest.cs" />
     <Compile Include="Tests\OrderTVOnlinerTest.cs" />

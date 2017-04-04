@@ -2,11 +2,11 @@
 
 namespace Onliner_tests.PageObject.FilterPageObj
 {
-    public class BasicFilterPage
+    public class BasicFilterComponent
     {
         private WebDriver _driver;
 
-        public BasicFilterPage(WebDriver driver)
+        public BasicFilterComponent(WebDriver driver)
         {
             _driver = driver;  
         }

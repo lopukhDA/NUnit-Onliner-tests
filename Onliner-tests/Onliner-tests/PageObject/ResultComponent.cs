@@ -8,11 +8,11 @@ using Newtonsoft.Json.Linq;
 
 namespace Onliner_tests.PageObject
 {
-    class CatalogPage
+    class ResultComponent
     {
         private WebDriver _driver;
 
-        public CatalogPage(WebDriver driver)
+        public ResultComponent(WebDriver driver)
         {
             _driver = driver;
         }
