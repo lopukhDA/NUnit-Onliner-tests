@@ -14,11 +14,13 @@ namespace Onliner_tests.Tests
         private string _url = "https://catalog.onliner.by/notebook";
 
         [Test]
-        public void SuccessfulNotebookOrderPriceASC()
+        public void OrderPriceAscNotebookTest()
         {
             var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceASC);
             try
             {
@@ -42,11 +44,13 @@ namespace Onliner_tests.Tests
         }
 
         [Test]
-        public void SuccessfulNotebookOrderPriceDESC()
+        public void OrderPriceDescNotebookTest()
         {
             var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceDESC);
             try
             {
@@ -71,11 +75,13 @@ namespace Onliner_tests.Tests
         }
 
         [Test]
-        public void SuccessfulNotebookOrderRating()
+        public void OrderRaitingNotebookTest()
         {
             var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(BasicOrderPage.OrderType.Rating);
             try
             {
@@ -100,11 +106,13 @@ namespace Onliner_tests.Tests
         }
 
         [TestCaseSource(typeof(DataForTests), "DataTestOrderJsonForNotebook")]
-        public void SuccessfulNotebookOrderNew(BasicOrderPage.OrderType type, string url)
+        public void OrderOtherNotebookTest(BasicOrderPage.OrderType type, string url)
         {
-            var catalogPage = new PageObject.CatalogPage(webDriver);
+            var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(type);
             try
             {

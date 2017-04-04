@@ -14,7 +14,7 @@ namespace Onliner_tests
     {
         private static ExtentReports _extent;
         private ExtentTest _test;
-        private static int i = 1;
+        private static int errorScrin = 0;
         private static string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
         private static string actualPath = path.Substring(0, path.LastIndexOf("bin"));
         private static string projectPath = new Uri(actualPath).LocalPath;
@@ -53,7 +53,8 @@ namespace Onliner_tests
             var message = TestContext.CurrentContext.Result.Message;
             if (status == TestStatus.Failed)
             {
-                string imageFilePath = projectPath + "Reports\\" + date + $"\\scrin{i++}.png";
+                errorScrin++;
+                string imageFilePath = projectPath + "Reports\\" + date + $"\\scrin{errorScrin}.png";
                 Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
                 ss.SaveAsFile(imageFilePath, ScreenshotImageFormat.Png);
                 _test.Fail(stackTrace + message, MediaEntityBuilder.CreateScreenCaptureFromPath(imageFilePath).Build());

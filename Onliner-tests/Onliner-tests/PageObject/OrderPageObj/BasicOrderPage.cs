@@ -19,20 +19,45 @@ namespace Onliner_tests.PageObject.OrderPageObj
         public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
         public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
         public By OrderOpen { get; set; } = By.CssSelector(".schema-order_opened");
-        public By OnlyNewProduct { get; set; } = By.CssSelector("input[name=ko_unique_2] + span");
+        public By OnlyNewProduct { get; set; } = By.CssSelector("input[value=new] + span");
+        public By AllProduct { get; set; } = By.CssSelector("input[value=all] + span");
+        public By OnlyUsedProduct { get; set; } = By.CssSelector("input[value=second] + span");
 
-        
         public enum OrderType
         {
             Popular, PriceASC, PriceDESC, New, Rating
         }
 
+        public enum ProductType
+        {
+            All, New, Used
+        }
+
+        public void ClickProductType(ProductType productType)
+        {
+            if (GetProductTypeCheckout() != productType)
+            {
+                switch (productType)
+                {
+                    case ProductType.All:
+                        _driver.Click(AllProduct);
+                        break;
+                    case ProductType.Used:
+                        _driver.Click(OnlyUsedProduct);
+                        break;
+                    case ProductType.New:
+                        _driver.Click(OnlyNewProduct);
+                        break;
+                }
+            }
+        }
+
         public void ClickOrder(OrderType orderType)
         {
-            _driver.Click(OnlyNewProduct);
+            
             if (GetOrdertypeCheckout() != orderType)
             {
-                //_driver.Click(ShowOrderLink);
+                _driver.Click(ShowOrderLink);
                 _driver.WaitForElementIsVisible(OrderOpen);
                 switch (orderType)
                 {
@@ -81,5 +106,22 @@ namespace Onliner_tests.PageObject.OrderPageObj
             return OrderType.Popular;
         }
 
+        private ProductType GetProductTypeCheckout()
+        {
+            Dictionary<By, ProductType> selectProductType = new Dictionary<By, ProductType>()
+            {
+                {AllProduct, ProductType.All},
+                {OnlyNewProduct, ProductType.New},
+                {OnlyUsedProduct, ProductType.Used}
+            };
+
+            foreach (var element in selectProductType)
+            {
+                if (_driver.GetElement(element.Key).GetCssValue("background").Equals("#555"))
+                    return element.Value;
+            }
+
+            return ProductType.All;
+        }
     }
 }

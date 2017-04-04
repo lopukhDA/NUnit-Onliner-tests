@@ -51,7 +51,7 @@ namespace Onliner_tests.PageObject.FilterPageObj
 
         public void ProcessingComplite()
         {
-            _driver.WaitWhileElementClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
+            _driver.WaitWhileElementNotClassContainsText(SchemaFilter, "schema-filter-button__state_animated");
         }
 
         public void WaitProcessing()

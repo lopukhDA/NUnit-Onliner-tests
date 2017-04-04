@@ -76,7 +76,7 @@ namespace Onliner_tests.PageObject
 
         public void ProcessingComplite()
         {
-            _driver.WaitWhileElementClassContainsText(LoadingProduct, "schema-products_processing");
+            _driver.WaitWhileElementNotClassContainsText(LoadingProduct, "schema-products_processing");
         }
 
         public void WaitProcessing()

@@ -17,7 +17,7 @@ namespace Onliner_tests.PageObject.FilterPageObj
         public By CpuIntelAtom { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=intelatom]+span");
         public By CpuSamsung { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=samsung]+span");
 
-        public By ShowOtherCPU { get; set; } = By.CssSelector("//span[contains(text(),'Процессор')]//..//..//div[contains(@data-bind, 'facet.togglePopover')]");
+        public By ShowOtherCPU { get; set; } = By.XPath("//span[contains(text(),'Процессор')]//..//..//div[contains(@data-bind, 'facet.togglePopover')]");
         public By FilterPopoverVisible { get; set; } = By.CssSelector(".schema-filter-popover.schema-filter-popover_visible");
 
         public enum CpuType

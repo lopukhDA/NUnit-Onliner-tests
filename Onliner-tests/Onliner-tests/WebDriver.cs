@@ -7,6 +7,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing.Imaging;
 
 namespace Onliner_tests
 {
@@ -15,7 +16,7 @@ namespace Onliner_tests
         public IWebDriver Driver { get; }
         private IWait<IWebDriver> _wait;
         private LoggerClass _log;
-        private const int _waitTimeout = 20;
+        private const int _waitTimeout = 5;
 
         public WebDriver(LoggerClass log)
         {
@@ -109,7 +110,7 @@ namespace Onliner_tests
             }
 
             _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(_waitTimeout));
-            
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
         public void Quit()
@@ -129,22 +130,24 @@ namespace Onliner_tests
         public void Click(IWebElement element)
         {
             _log.Log($"Click to WebElement {element.TagName}");
-            WaitForElementIsVisible(element);
+            //WaitForElementIsVisible(element);
             element.Click();
         }
 
         public void SendKeys(By locator, string text)
         {
             _log.Log($"Text '{text}' entered in the locator {locator}");
-            var element = FindElementWithWaiting(locator);
+            //var element = FindElementWithWaiting(locator);
+            var element = GetElement(locator);
             element.SendKeys(text);
         }
 
         public void Click(By locator)
         {
             _log.Log($"Click to locator {locator}");
-            var el = FindElementWithWaiting(locator);
-            el.Click();
+            //var element = FindElementWithWaiting(locator);
+            var element = GetElement(locator);
+            element.Click();
         }
 
         public string GetTitle()
@@ -161,7 +164,8 @@ namespace Onliner_tests
 
         public string GetText(By locator)
         {
-            string text = FindElementWithWaiting(locator).Text;
+            //string text = FindElementWithWaiting(locator).Text;
+            var text = GetElement(locator).Text;
             _log.Log($"Get text locator {locator} ({text})");
             return text;
         }
@@ -202,7 +206,7 @@ namespace Onliner_tests
             return wait.Until(d => d.FindElement(by));
         }
 
-        public void WaitWhileElementClassContainsText(By by, string text, int timeout = _waitTimeout)
+        public void WaitWhileElementNotClassContainsText(By by, string text, int timeout = _waitTimeout)
         {
             IWait<IWebDriver> wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -212,7 +216,8 @@ namespace Onliner_tests
         public bool CheckClassForElement(By locator, string classCheck)
         {
             bool flag = false;
-            var element = FindElementWithWaiting(locator);
+            //var element = FindElementWithWaiting(locator);
+            var element = GetElement(locator);
             _log.Log($"Check class \"{classCheck}\" for locator {locator}");
             if (element.GetAttribute("class").Contains(classCheck))
             {
@@ -231,8 +236,15 @@ namespace Onliner_tests
 
         public IWebElement GetElement(By locator)
         {
-            var el = FindElementWithWaiting(locator);
+            //var el = FindElementWithWaiting(locator);
+            var el = Driver.FindElement(locator);
             return el;
+        }
+
+        public void TakeScreenshot(string saveLocation)
+        {
+            Screenshot ss = ((ITakesScreenshot)Driver).GetScreenshot();
+            ss.SaveAsFile(saveLocation, ScreenshotImageFormat.Png);
         }
 
     }

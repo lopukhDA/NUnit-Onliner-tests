@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using System.Configuration;
+
 using AventStack.ExtentReports;
 
 namespace Onliner_tests.Tests
@@ -22,5 +22,4 @@ namespace Onliner_tests.Tests
 
     }
 
-    
 }

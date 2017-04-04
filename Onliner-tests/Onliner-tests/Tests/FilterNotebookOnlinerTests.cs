@@ -80,7 +80,6 @@ namespace Onliner_tests.Tests
             log.Log(Status.Pass, "The interval filter works correctly");
         }
 
-        //[Test]
         [TestCaseSource(typeof(DataForTests), "DataTestCPU")]
         public void ProcessorFilterAMDa10Notebook(FilterNotebookPage.CpuType type, string text)
         {
@@ -100,7 +99,7 @@ namespace Onliner_tests.Tests
             string[] descriptionAll = catalogPage.GetAllDescriptioninThePage();
             foreach (var item in descriptionAll)
             {
-                if(!item.Contains(text))
+                if (!item.Contains(text))
                 {
                     Assert.Fail($"The processor '{text}' filter not works correctly");
                 }

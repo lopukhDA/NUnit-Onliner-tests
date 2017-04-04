@@ -3,6 +3,7 @@ using Onliner_tests.PageObject.OrderPageObj;
 using AventStack.ExtentReports;
 using System;
 using System.Collections.Generic;
+using Onliner_tests.PageObject;
 
 namespace Onliner_tests.Tests
 {
@@ -15,10 +16,12 @@ namespace Onliner_tests.Tests
         [Test]
         public void OrderPriceAscTVTest()
         {
-            var catalogPage = new PageObject.CatalogPage(webDriver);
+            var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
             basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceASC);
+            catalogPage.ProcessingComplite();
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
             try
             {
                 catalogPage.WaitProcessing();
@@ -38,9 +41,11 @@ namespace Onliner_tests.Tests
         [Test]
         public void OrderPriceDescTVTest()
         {
-            var catalogPage = new PageObject.CatalogPage(webDriver);
+            var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(BasicOrderPage.OrderType.PriceDESC);
             try
             {
@@ -63,9 +68,11 @@ namespace Onliner_tests.Tests
         [Test]
         public void OrderRatingTVTest()
         {
-            var catalogPage = new PageObject.CatalogPage(webDriver);
+            var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(BasicOrderPage.OrderType.Rating);
             try
             {
@@ -92,9 +99,11 @@ namespace Onliner_tests.Tests
         [TestCaseSource(typeof(DataForTests), "DataTestOrderJsonForTV")]
         public void OrderOtherTVTest(BasicOrderPage.OrderType type, string url)
         {
-            var catalogPage = new PageObject.CatalogPage(webDriver);
+            var catalogPage = new CatalogPage(webDriver);
             var basicOrderPage = new BasicOrderPage(webDriver);
             catalogPage.Open(_url);
+            basicOrderPage.ClickProductType(BasicOrderPage.ProductType.New);
+            catalogPage.ProcessingComplite();
             basicOrderPage.ClickOrder(type);
             try
             {
