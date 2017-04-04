@@ -76,7 +76,6 @@ namespace Onliner_tests.Tests
             {
                 catalogPage.ProcessingComplite();
             }
-            //double[] stars1 = catalogPage.GetAllStarsInThisPage();
             double[] stars = catalogPage.GetAllStarsInThisPage();
             for (int i = 0; i < stars.Length - 1; i++)
             {

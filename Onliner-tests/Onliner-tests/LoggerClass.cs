@@ -17,12 +17,16 @@ namespace Onliner_tests
         private static string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
         private static string actualPath = path.Substring(0, path.LastIndexOf("bin"));
         private static string projectPath = new Uri(actualPath).LocalPath;
+        private static string date = DateTime.Now.ToString("dd-MM-yyyy_HH-mm");
 
         static LoggerClass()
         {
-            
-            Directory.CreateDirectory(projectPath + "Reports");
-            string reportPath = projectPath + "Reports\\Report.html";
+
+
+
+
+            Directory.CreateDirectory(projectPath + "Reports\\" + date);
+            string reportPath = projectPath + "Reports\\" + date + "\\Report.html";
             _extent = new ExtentReports();
             _extent.AttachReporter(new ExtentHtmlReporter(reportPath));
             _extent.AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"));
@@ -49,11 +53,11 @@ namespace Onliner_tests
             var message = TestContext.CurrentContext.Result.Message;
             if (status == TestStatus.Failed)
             {
-                string imageFilePath = projectPath + $"Reports\\scrin{i++}.png";
+                string imageFilePath = projectPath + $"Reports\\" + date + "\\scrin{i++}.png";
                 Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
                 ss.SaveAsFile(imageFilePath, ScreenshotImageFormat.Png);
                 _test.Fail(stackTrace + message, MediaEntityBuilder.CreateScreenCaptureFromPath(imageFilePath).Build());
-               
+
             }
 
             _test.Log(Status.Info, "EndTest() method will stop capturing information about the test log");

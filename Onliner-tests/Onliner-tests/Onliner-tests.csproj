@@ -59,7 +59,6 @@
     <Compile Include="Tests\FilterNotebookOnlinerTests.cs" />
     <Compile Include="LoggerClass.cs" />
     <Compile Include="Tests\OrderNotebootOnlinerTests.cs" />
-    <Compile Include="Tests\OrderPopularAndNewNotebookOnlinerTest.cs" />
     <Compile Include="PageObject\CatalogPage.cs" />
     <Compile Include="PageObject\FilterPageObj\BasicFilterPage.cs" />
     <Compile Include="PageObject\LoginPage.cs" />

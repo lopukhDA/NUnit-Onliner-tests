@@ -21,6 +21,8 @@
 bld/
 [Bb]in/
 [Oo]bj/
+Reports/
+Onliner-testsTests/
 
 # Visual Studio 2015 cache/options directory
 .vs/
