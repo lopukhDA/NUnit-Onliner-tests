@@ -31,7 +31,7 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
             for (int i = 0; i < price.Length - 1; i++)
             {
                 if (price[i] > price[i + 1])
@@ -61,7 +61,7 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
             for (int i = 0; i < price.Length - 1; i++)
             {
                 if (price[i] < price[i + 1])
@@ -92,7 +92,7 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            double[] stars = resultComponent.GetAllStarsInThisPage();
+            double[] stars = resultComponent.GetAllStarsOnThisPage();
             for (int i = 0; i < stars.Length - 1; i++)
             {
                 if (stars[i] < stars[i + 1])
@@ -124,7 +124,7 @@ namespace Onliner_tests.Tests
                 resultComponent.ProcessingComplite();
             }
             List<string> fullNameListJSON = resultComponent.GetListJsonFullName(url);
-            List<string> fullNameListPage = resultComponent.GetListPagefullName();
+            List<string> fullNameListPage = resultComponent.GetListFullnameOnThisPage();
             Assert.AreEqual(fullNameListJSON, fullNameListPage, "JSON is different");
             log.Log(Status.Pass, $"The order {type}  works correctly");
         }

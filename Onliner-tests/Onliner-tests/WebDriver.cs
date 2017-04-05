@@ -16,7 +16,7 @@ namespace Onliner_tests
         public IWebDriver Driver { get; }
         private IWait<IWebDriver> _wait;
         private LoggerClass _log;
-        private const int _waitTimeout = 5;
+        private const int _waitTimeout = 15;
 
         public WebDriver(LoggerClass log)
         {
@@ -150,6 +150,13 @@ namespace Onliner_tests
             element.Click();
         }
 
+        public void WaitForElementIsVisibleAndClick(By locator)
+        {
+            _log.Log($"Click to locator {locator}");
+            var element = FindElementWithWaiting(locator);
+            element.Click();
+        }
+
         public string GetTitle()
         {
             _log.Log($"Get Title page ({Driver.Title})");
@@ -243,8 +250,8 @@ namespace Onliner_tests
 
         public void TakeScreenshot(string saveLocation)
         {
-            Screenshot ss = ((ITakesScreenshot)Driver).GetScreenshot();
-            ss.SaveAsFile(saveLocation, ScreenshotImageFormat.Png);
+            Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+            screenshot.SaveAsFile(saveLocation, ScreenshotImageFormat.Png);
         }
 
     }

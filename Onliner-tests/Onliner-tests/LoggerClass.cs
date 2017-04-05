@@ -27,7 +27,6 @@ namespace Onliner_tests
             var htmlReporter = new ExtentHtmlReporter(reportPath);
             htmlReporter.Configuration().ChartVisibilityOnOpen = false;
             htmlReporter.Configuration().DocumentTitle = "Onliner tests report";
-            htmlReporter.Configuration().Theme = Theme.Dark;
             _extent.AttachReporter(htmlReporter);
             _extent.AddSystemInfo("DriverType", ConfigurationManager.AppSettings.Get("DriverType"));
             _extent.AddSystemInfo("Using grid selenium", ConfigurationManager.AppSettings.Get("Grid"));
@@ -55,9 +54,10 @@ namespace Onliner_tests
             {
                 errorScrin++;
                 string imageFilePath = projectPath + "Reports\\" + date + $"\\scrin{errorScrin}.png";
-                Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
-                ss.SaveAsFile(imageFilePath, ScreenshotImageFormat.Png);
-                _test.Fail(stackTrace + message, MediaEntityBuilder.CreateScreenCaptureFromPath(imageFilePath).Build());
+                Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                screenshot.SaveAsFile(imageFilePath, ScreenshotImageFormat.Png);
+                AttachScreenshot(stackTrace + message, imageFilePath);
+                //_test.Fail(stackTrace + message, MediaEntityBuilder.CreateScreenCaptureFromPath(imageFilePath).Build());
             }
             _test.Log(Status.Info, "EndTest() method will stop capturing information about the test log");
         }
@@ -105,6 +105,12 @@ namespace Onliner_tests
         public void ErrorLog(string text)
         {
             _test.Log(Status.Error, text);
+        }
+
+        public void AttachScreenshot(string errorMassege, string imageFilePath)
+        {
+            _test.Fail(errorMassege).AddScreenCaptureFromPath(imageFilePath);
+
         }
 
     }

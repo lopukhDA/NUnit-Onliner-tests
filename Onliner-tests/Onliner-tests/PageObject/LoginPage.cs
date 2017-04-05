@@ -16,6 +16,11 @@ namespace Onliner_tests.PageObject
             _driver.Navigate("https://www.onliner.by/");
         }
 
+        public void Open(string url)
+        {
+            _driver.Navigate(url);
+        }
+
         public By Username { get; set; } = By.CssSelector(".user-name a");
         public By ButtonShowFormLogin { get; set; } = By.ClassName("auth-bar__item--text");
         public By LoginInput { get; set; } = By.CssSelector("#auth-container__forms form input.auth-box__input[data-field=login][type=text]");

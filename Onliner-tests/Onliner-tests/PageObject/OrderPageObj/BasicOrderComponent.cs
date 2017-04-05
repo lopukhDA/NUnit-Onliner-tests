@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace Onliner_tests.PageObject.OrderPageObj
@@ -13,76 +14,78 @@ namespace Onliner_tests.PageObject.OrderPageObj
         }
 
         public By ShowOrderLink { get; set; } = By.CssSelector(".schema-order__link");
-        public By OrderPopular { get; set; } = By.CssSelector(".schema-order__item:nth-child(1)");
-        public By OrderPriceASC { get; set; } = By.CssSelector(".schema-order__item:nth-child(2)");
-        public By OrderPriceDESC { get; set; } = By.CssSelector(".schema-order__item:nth-child(3)");
-        public By OrderNew { get; set; } = By.CssSelector(".schema-order__item:nth-child(4)");
-        public By OrderRating { get; set; } = By.CssSelector(".schema-order__item:nth-child(5)");
         public By OrderOpen { get; set; } = By.CssSelector(".schema-order_opened");
-        public By OnlyNewProduct { get; set; } = By.CssSelector("input[value=new] + span");
-        public By AllProduct { get; set; } = By.CssSelector("input[value=all] + span");
-        public By OnlyUsedProduct { get; set; } = By.CssSelector("input[value=second] + span");
+
+        private string _orderProductFormat = ".schema-order__item:nth-child({0})";
+        private string _productTypeFormat = "input[value={0}] + span";
 
         public enum OrderType
         {
-            Popular, PriceASC, PriceDESC, New, Rating
+            Popular = 1,
+            PriceASC,
+            PriceDESC,
+            New,
+            Rating
+        }
+
+        private By CreateOrderLocator(OrderType orderType)
+        {
+            switch (orderType)
+            {
+                case OrderType.Popular:
+                    return By.CssSelector(String.Format(_orderProductFormat, (int)OrderType.Popular));
+                case OrderType.PriceASC:
+                    return By.CssSelector(String.Format(_orderProductFormat, (int)OrderType.PriceASC));
+                case OrderType.PriceDESC:
+                    return By.CssSelector(String.Format(_orderProductFormat, (int)OrderType.PriceDESC));
+                case OrderType.New:
+                    return By.CssSelector(String.Format(_orderProductFormat, (int)OrderType.New));
+                case OrderType.Rating:
+                    return By.CssSelector(String.Format(_orderProductFormat, (int)OrderType.Rating));
+                default:
+                    throw new Exception($"Order type {orderType.ToString()} not defined");
+            }
         }
 
         public enum ProductType
         {
-            All, New, Used
+            All = 1,
+            New,
+            Used
+        }
+
+        private By CreateProductTypeLocator(ProductType productType)
+        {
+            switch (productType)
+            {
+                case ProductType.All:
+                    return By.CssSelector(String.Format(_productTypeFormat, "all"));
+                case ProductType.New:
+                    return By.CssSelector(String.Format(_productTypeFormat, "new"));
+                case ProductType.Used:
+                    return By.CssSelector(String.Format(_productTypeFormat, "second"));
+                default:
+                    throw new Exception($"Product type {productType.ToString()} not defined");
+            }
         }
 
         public void ClickProductType(ProductType productType)
         {
             if (GetProductTypeCheckout() != productType)
             {
-                switch (productType)
-                {
-                    case ProductType.All:
-                        _driver.Click(AllProduct);
-                        break;
-                    case ProductType.Used:
-                        _driver.Click(OnlyUsedProduct);
-                        break;
-                    case ProductType.New:
-                        _driver.Click(OnlyNewProduct);
-                        break;
-                }
+                _driver.Click(CreateProductTypeLocator(productType));
             }
         }
 
         public void ClickOrder(OrderType orderType)
         {
-            
+
             if (GetOrdertypeCheckout() != orderType)
             {
-                _driver.Click(ShowOrderLink);
+                _driver.WaitForElementIsVisible(ShowOrderLink);
+                _driver.WaitForElementIsVisibleAndClick(ShowOrderLink);
                 _driver.WaitForElementIsVisible(OrderOpen);
-                switch (orderType)
-                {
-                    case OrderType.PriceASC:
-                        _driver.WaitForElementIsVisible(OrderPriceASC);
-                        _driver.Click(OrderPriceASC);
-                        break;
-                    case OrderType.PriceDESC:
-                        _driver.WaitForElementIsVisible(OrderPriceDESC);
-                        _driver.Click(OrderPriceDESC);
-                        break;
-                    case OrderType.New:
-                        _driver.WaitForElementIsVisible(OrderNew);
-                        _driver.Click(OrderNew);
-                        break;
-                    case OrderType.Popular:
-                        _driver.WaitForElementIsVisible(OrderPopular);
-                        _driver.Click(OrderPopular);
-                        break;
-                    case OrderType.Rating:
-                        _driver.WaitForElementIsVisible(OrderRating);
-                        _driver.Click(OrderRating);
-                        break;
-                }
-               
+                _driver.WaitForElementIsVisibleAndClick(CreateOrderLocator(orderType));
             }
         }
 
@@ -90,11 +93,11 @@ namespace Onliner_tests.PageObject.OrderPageObj
         {
             Dictionary<By, OrderType> selectOrder = new Dictionary<By, OrderType>()
             {
-                {OrderPopular, OrderType.Popular},
-                {OrderPriceASC, OrderType.PriceASC},
-                {OrderPriceDESC, OrderType.PriceDESC},
-                {OrderNew, OrderType.New},
-                {OrderRating, OrderType.Rating},
+                {CreateOrderLocator(OrderType.Popular), OrderType.Popular},
+                {CreateOrderLocator(OrderType.PriceASC), OrderType.PriceASC},
+                {CreateOrderLocator(OrderType.PriceDESC), OrderType.PriceDESC},
+                {CreateOrderLocator(OrderType.New), OrderType.New},
+                {CreateOrderLocator(OrderType.Rating), OrderType.Rating},
             };
 
             foreach (var element in selectOrder)
@@ -110,9 +113,9 @@ namespace Onliner_tests.PageObject.OrderPageObj
         {
             Dictionary<By, ProductType> selectProductType = new Dictionary<By, ProductType>()
             {
-                {AllProduct, ProductType.All},
-                {OnlyNewProduct, ProductType.New},
-                {OnlyUsedProduct, ProductType.Used}
+                {CreateProductTypeLocator(ProductType.All), ProductType.All},
+                {CreateProductTypeLocator(ProductType.New), ProductType.New},
+                {CreateProductTypeLocator(ProductType.Used), ProductType.Used}
             };
 
             foreach (var element in selectProductType)

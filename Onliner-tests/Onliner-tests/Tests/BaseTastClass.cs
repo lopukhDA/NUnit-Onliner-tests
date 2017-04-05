@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Onliner_tests.Tests
 {
-    public class BaseTastClass
+    public abstract class BaseTastClass
     {
         protected WebDriver webDriver;
         protected LoggerClass log;

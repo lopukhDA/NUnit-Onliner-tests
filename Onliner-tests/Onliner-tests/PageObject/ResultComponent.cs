@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Onliner_tests.PageObject
 {
@@ -30,24 +31,16 @@ namespace Onliner_tests.PageObject
         public By FullNameProducts { get; set; } = By.XPath("//span[ contains(@data-bind,'product.extended_name')]");
         public By ProductDescription { get; set; } = By.XPath("//span[ contains(@data-bind,'html: product.description')]");
 
-        public string[] GetAllDescriptioninThePage()
+        public string[] GetAllDescriptionOnThePage()
         {
             IList<IWebElement> allElements = _driver.FindAllElements(ProductDescription);
-            string[] allDescriptioninText = new string[allElements.Count];
-            int i = 0;
-            foreach (IWebElement element in allElements)
-            {
-                String Descriptionin = element.GetAttribute("innerHTML").Replace("&nbsp;", " ");
-                allDescriptioninText[i++] = Descriptionin.ToString();
-            }
-            return allDescriptioninText;
+            return allElements.Select(el => el.GetAttribute("innerHTML").Replace("&nbsp;", " ")).ToArray();
         }
 
         public List<string> GetListJsonFullName(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
-            request.Host = "catalog.api.onliner.by";
             request.Accept = "application/json, text/javascript, */*; q=0.01";
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -84,42 +77,22 @@ namespace Onliner_tests.PageObject
             _driver.WaitForElementIsVisible(LoadingProductProcessing);
         }
 
-        public double[] GetAllStarsInThisPage()
+        public double[] GetAllStarsOnThisPage()
         {
             IList<IWebElement> allElements = _driver.FindAllElements(RatingStar);
-            double[] allStarsText = new double[allElements.Count];
-            int i = 0;
-            foreach (IWebElement element in allElements)
-            {
-                String stars = element.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", "");
-                allStarsText[i++] = Convert.ToDouble(stars);
-            }
-            return allStarsText;
+            return allElements.Select(el => Convert.ToDouble(el.GetAttribute("class").Replace("rating", "").Replace(" ", "").Replace("_", "").Replace(",", ""))).ToArray();
         }
 
-        public List<string> GetListPagefullName()
+        public List<string> GetListFullnameOnThisPage()
         {
             IList<IWebElement> allElements = _driver.FindAllElements(FullNameProducts);
-            List<string> fullNameList = new List<string>();
-            foreach (IWebElement element in allElements)
-            {
-                String fullname = element.GetAttribute("innerHTML").Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " ");
-                fullNameList.Add(fullname);
-            }
-            return fullNameList;
+            return allElements.Select(el => el.GetAttribute("innerHTML").Replace("&quot;", "\"").Replace("&#039;", "'").Replace("&nbsp;", " ")).ToList<string>();
         }
 
-        public double[] GetAllPriceInThisPage()
+        public double[] GetAllPriceOnThisPage()
         {
             IList<IWebElement> allElements = _driver.FindAllElements(PriceProducts);
-            double[] allPriceText = new double[allElements.Count];
-            int i = 0;
-            foreach (IWebElement element in allElements)
-            {
-                String price = element.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", ".");
-                allPriceText[i++] = Convert.ToDouble(price);
-            }
-            return allPriceText;
+            return allElements.Select(el => Convert.ToDouble(el.GetAttribute("innerHTML").Replace("&nbsp;", "").Replace("р.", "").Replace(",", "."))).ToArray();
         }
 
     }

@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
 
 namespace Onliner_tests.PageObject.FilterPageObj
 {
@@ -11,45 +13,50 @@ namespace Onliner_tests.PageObject.FilterPageObj
             _driver = driver;
         }
 
-        public By CpuIntelCoreI7 { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=intelcorei7]+span");
-        public By CpuAMDa10 { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=amda10]+span");
-        public By CpuAMDfx { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=amdfx]+span");
-        public By CpuIntelAtom { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=intelatom]+span");
-        public By CpuSamsung { get; set; } = By.CssSelector(".schema-filter-popover_visible input[value=samsung]+span");
-
         public By ShowOtherCPU { get; set; } = By.XPath("//span[contains(text(),'Процессор')]//..//..//div[contains(@data-bind, 'facet.togglePopover')]");
-        public By FilterPopoverVisible { get; set; } = By.CssSelector(".schema-filter-popover.schema-filter-popover_visible");
+        public By FilterPopoverVisible { get; set; } = By.XPath("//span[contains(text(),'Процессор')]/ancestor::*/following-sibling::div/child::div[contains(@class,'schema-filter-popover__wrapper')]/div");
+
+        private string _cpuFormat = ".schema-filter-popover_visible input[value={0}]+span";
 
         public enum CpuType
         {
-            IntelCoreI7, AMDa10, AMDfx, IntelAtom, Samsung
+            IntelCoreI7,
+            AMDa10,
+            AMDfx,
+            IntelAtom,
+            Samsung
         }
 
-        public void SelectCPU(CpuType orderType)
+        private By CreateOrderLocator(CpuType cpuType)
+        {
+            switch (cpuType)
+            {
+                case CpuType.IntelCoreI7:
+                    return By.CssSelector(String.Format(_cpuFormat, "intelcorei7"));
+                case CpuType.AMDa10:
+                    return By.CssSelector(String.Format(_cpuFormat, "amda10"));
+                case CpuType.AMDfx:
+                    return By.CssSelector(String.Format(_cpuFormat, "amdfx"));
+                case CpuType.IntelAtom:
+                    return By.CssSelector(String.Format(_cpuFormat, "intelatom"));
+                case CpuType.Samsung:
+                    return By.CssSelector(String.Format(_cpuFormat, "samsung"));
+                default:
+                    throw new Exception($"Order type {cpuType.ToString()} not defined");
+            }
+        }
+
+        public void SelectCPU(CpuType cpuType)
         {
             _driver.WaitForElementIsVisible(Filter);
             var proc = _driver.GetElement(ShowOtherCPU);
             _driver.Scroll((proc.Location.Y).ToString());
-            _driver.Click(ShowOtherCPU);
-            _driver.WaitForElementIsVisible(FilterPopoverVisible);
-            switch (orderType)
+            if(!_driver.CheckClassForElement(FilterPopoverVisible, "schema-filter-popover_visible"))
             {
-                case CpuType.IntelCoreI7:
-                    _driver.Click(CpuIntelCoreI7);
-                    break;
-                case CpuType.AMDa10:
-                    _driver.Click(CpuAMDa10);
-                    break;
-                case CpuType.AMDfx:
-                    _driver.Click(CpuAMDfx);
-                    break;
-                case CpuType.IntelAtom:
-                    _driver.Click(CpuIntelAtom);
-                    break;
-                case CpuType.Samsung:
-                    _driver.Click(CpuSamsung);
-                    break;
+                _driver.Click(ShowOtherCPU);
             }
+            _driver.WaitForElementIsVisible(FilterPopoverVisible);
+            _driver.Click(CreateOrderLocator(cpuType));
             WaitComplitePrice();
         }
 

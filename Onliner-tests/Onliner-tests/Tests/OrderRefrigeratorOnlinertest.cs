@@ -31,8 +31,8 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            double[] price = resultComponent.GetAllPriceInThisPage();
-            double[] priceSortASC = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
+            double[] priceSortASC = resultComponent.GetAllPriceOnThisPage();
             Array.Sort(priceSortASC);
             Assert.AreEqual(price, priceSortASC, "Error, wrong sorting of prices");
             log.Log(Status.Pass, "The order price by ASC works correctly");
@@ -56,8 +56,8 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            double[] price = resultComponent.GetAllPriceInThisPage();
-            double[] priceSortDESC = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
+            double[] priceSortDESC = resultComponent.GetAllPriceOnThisPage();
             Array.Sort(priceSortDESC);
             Array.Reverse(priceSortDESC);
 
@@ -83,7 +83,7 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            double[] stars = resultComponent.GetAllStarsInThisPage();
+            double[] stars = resultComponent.GetAllStarsOnThisPage();
             for (int i = 0; i < stars.Length - 1; i++)
             {
                 if (stars[i] < stars[i + 1])
@@ -115,7 +115,7 @@ namespace Onliner_tests.Tests
                 resultComponent.ProcessingComplite();
             }
             List<string> fullNameListJSON = resultComponent.GetListJsonFullName(url);
-            List<string> fullNameListPage = resultComponent.GetListPagefullName();
+            List<string> fullNameListPage = resultComponent.GetListFullnameOnThisPage();
             Assert.AreEqual(fullNameListJSON, fullNameListPage, "JSON is different");
             log.Log(Status.Pass, $"The order {type}  works correctly");
         }

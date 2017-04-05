@@ -21,7 +21,7 @@ namespace Onliner_tests.Tests
             double maxPrice = max;
             filterNotebookComponent.InputFilterMaxPrice(maxPrice);
             resultComponent.ProcessingComplite();
-            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -43,7 +43,7 @@ namespace Onliner_tests.Tests
             double minPrice = m;
             filterNotebookComponent.InputFilterMinPrice(minPrice);
             resultComponent.ProcessingComplite();
-            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -67,7 +67,7 @@ namespace Onliner_tests.Tests
             double maxPrice = max;
             filterNotebookComponent.InputFilterFullPrice(minPrice, maxPrice);
             resultComponent.ProcessingComplite();
-            double[] price = resultComponent.GetAllPriceInThisPage();
+            double[] price = resultComponent.GetAllPriceOnThisPage();
             bool error = false;
             for (int i = 0; i < price.Length; i++)
             {
@@ -80,8 +80,36 @@ namespace Onliner_tests.Tests
             log.Log(Status.Pass, "The interval filter works correctly");
         }
 
+        [Test]
+        public void ProcessorFilterAMDa10AndAMDfx()
+        {
+            var resultComponent = new ResultComponent(webDriver);
+            var filterNotebookComponent = new FilterNotebookComponent(webDriver);
+            resultComponent.Open(_url);
+            filterNotebookComponent.SelectCPU(FilterNotebookComponent.CpuType.AMDa10);
+            filterNotebookComponent.SelectCPU(FilterNotebookComponent.CpuType.AMDfx);
+            try
+            {
+                resultComponent.WaitProcessing();
+            }
+            catch (Exception) { }
+            finally
+            {
+                resultComponent.ProcessingComplite();
+            }
+            string[] descriptionAll = resultComponent.GetAllDescriptionOnThePage();
+            foreach (var item in descriptionAll)
+            {
+                if (!(item.Contains("AMD A10") || item.Contains("AMD FX")))
+                {
+                    Assert.Fail($"The processor 'AMD A10 or AMD FX' filter not works correctly");
+                }
+            }
+            log.Log(Status.Pass, $"The processor 'AMD A10 or AMD FX' filter works correctly");
+        }
+
         [TestCaseSource(typeof(DataForTests), "DataTestCPU")]
-        public void ProcessorFilterAMDa10Notebook(FilterNotebookComponent.CpuType type, string text)
+        public void OneProcessorFilterNotebook(FilterNotebookComponent.CpuType type, string text)
         {
             var resultComponent = new ResultComponent(webDriver);
             var filterNotebookComponent = new FilterNotebookComponent(webDriver);
@@ -96,7 +124,7 @@ namespace Onliner_tests.Tests
             {
                 resultComponent.ProcessingComplite();
             }
-            string[] descriptionAll = resultComponent.GetAllDescriptioninThePage();
+            string[] descriptionAll = resultComponent.GetAllDescriptionOnThePage();
             foreach (var item in descriptionAll)
             {
                 if (!item.Contains(text))
